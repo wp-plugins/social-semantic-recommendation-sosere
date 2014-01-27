@@ -14,7 +14,9 @@ Display a list of related entries on your site based on an unique, self-learning
 
 == Description ==
 
-Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It increases your SEO performance, helps to engage readers and show them what else is worth their reading time. 
+Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It increases your SEO performance, 
+helps to engage readers and show them what else is worth their reading time. Intelligent, customizable, efficient and easy to use.  No need to add any PHP tags. 
+It works out-of-the-box. Activate and enjoy.  
 
 **SOSERE Community Edition Features**
 <br />
@@ -25,7 +27,9 @@ Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post t
 *  Customizable css style
 *  Customizable recommendation box title
 <br />
-**Related posts, pages, and custom post types**.
+**Support of related posts, pages, and custom post types**
+-----------------------------------------
+*  Customizable recommended entry types
 <br />
 **An unique social-semantic network analysis algorithm** 
 -----------------------------------------
