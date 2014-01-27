@@ -1,0 +1,11 @@
+/* admin page */
+.admininfo {
+	position:absolute; 
+	left:40%;
+}
+#default_thumbnail_img {
+	float: left;
+}
+#default_thumb_button {
+	margin-left: 20px;
+}
