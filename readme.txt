@@ -10,33 +10,44 @@ Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv2 
 
-Display a list of related entries on your site based on a unique socialsemantic network analysis algorithm. It is self-learning and fit's to every post individually over time.
+Display a list of related entries on your site based on a unique, self-learning, socialsemantic network analysis algorithm.
 
 == Description ==
 
-Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It helps to engage readers and show them what else is worth their reading time. 
+Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It increase your SEO performance, helps to engage readers and show them what else is worth their reading time. 
 
-**SOSERE Basic Features**
+**SOSERE Community Edition Features**
 -----------------------------------------
-* **Thumbnails or list view** of related content.
+* **Customizable view**
+** Automatic linking of related content at the bottom of each post/page.
+** Thumbnails, Thumbnails with post titles or list view
+** Customizable css style
+** Customizable recommendation box title
 * **Related posts, pages, and custom post types**.
-* **An unique socialsemantic network analysis algorithm**: Using a unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
-* **Caching**: SOSERE is efficient, caching related posts data as your site is visited.
+* **An unique social-semantic network analysis algorithm**
+** Using a unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
+** Respects users privacy
+* **Custom Caching**
+** SOSERE is efficient, caching related posts data as your site is visited.
 
 This plugin requires PHP 5, MySQL 4.1, and WordPress 3.0 or greater. 
-See [the FAQ](http://wordpress.org/plugins/sosere-recommendation/faq/) for answers to common questions.
+See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
+**Like SOSERE?**
+Spread it to the world! Leave a review or simple say: "Thank you, good job."
+[the Reviews](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/)
+Stay informed and follow us on Twitter: [SOSORE on Twitter] (https://twitter.com/sosere_rec)
 
 == Installation ==
-** Single site installation **
-1. 	  Download the plugin and unzip
+= Single site installation =
+1.    Download the plugin and unzip
 2.    Put the sosere-recommendation folder in your wp-content/plugins folder and activate the plugin through the WordPress admin.
 3.    Done! The plugin will automatically display related posts underneath your posts content. 
 4.   (Optional) Go to the "SOSERE" settings page to customize Sosere.
 
 
-** Multi site installation **
-1. 	  Download the plugin and unzip
+= Multi site installation =
+1.    Download the plugin and unzip
 2.    Put the content of sosere-recommendation folder in your wp-content/mu-plugins folder and activate the plugin through the WordPress admin.
 3.    Done! The plugin will automatically display related posts underneath your posts content. 
 4.   (Optional) Go to the "SOSERE" settings page to customize Sosere.
@@ -47,13 +58,13 @@ See [the FAQ](http://wordpress.org/plugins/sosere-recommendation/faq/) for answe
 
 Below are Frequently Asked Questions about SOSERE basic. 
 
-If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/sosere-recommendation/). 
+If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/social-semantic-recommendation-sosere/). 
 
 = How SOSERE respect my visitors privacy? =
 
 SOSERE doesn't collect user specific informations. The plugin need to know what a user do on a blog and not who he is. All data collected by sosere is stored in the local database. SOSERE respect "Do Not Track" option and don't set extra cookies.
 
-= Are there any plugins that are incompatible with So? =
+= Are there any plugins that are incompatible with SOSERE? =
 
 Actually the are no known incompatible plugins. 
 

@@ -140,7 +140,9 @@
 				if ( true == $this->use_cache ) {
 					$cached = get_post_meta( $this->post->ID, 'soseredbviewedpostscache' );
 					$cachetime = get_post_meta( $this->post->ID, 'soseredbviewedpostscachedate' );
-					$cachetime = (int) $cachetime[0];
+					if ( is_array( $cachetime ) ) {
+						$cachetime = (int) $cachetime[0];
+					}
 
 					// diff in hours
 					if ( isset( $cachetime ) ){
