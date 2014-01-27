@@ -18,21 +18,14 @@ Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post t
 
 **SOSERE Community Edition Features**
 -----------------------------------------
-* **Customizable view**
- *  Automatic linking of related content at the bottom of each post/page.
+* **Customizable view** *  Automatic linking of related content at the bottom of each post/page.
  *  Thumbnails, thumbnails with post titles or list view
  *  Customizable css style
  *  Customizable recommendation box title
-
 * **Related posts, pages, and custom post types**.
-
-* **An unique social-semantic network analysis algorithm**
- *  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
+* **An unique social-semantic network analysis algorithm** *  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
  *  Respects users privacy
-
-* **Custom Caching**
- *  SOSERE is efficient, caching related posts data as your site is visited.
-
+* **Custom Caching** *  SOSERE is efficient, caching related posts data as your site is visited.
 * **Multilanguage support**
 
 
