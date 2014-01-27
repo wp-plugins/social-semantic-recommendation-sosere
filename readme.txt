@@ -19,16 +19,16 @@ Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post t
 **SOSERE Community Edition Features**
 -----------------------------------------
 * **Customizable view**
-** Automatic linking of related content at the bottom of each post/page.
-** Thumbnails, Thumbnails with post titles or list view
-** Customizable css style
-** Customizable recommendation box title
+Automatic linking of related content at the bottom of each post/page.
+Thumbnails, Thumbnails with post titles or list view
+Customizable css style
+Customizable recommendation box title
 * **Related posts, pages, and custom post types**.
 * **An unique social-semantic network analysis algorithm**
-** Using a unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
-** Respects users privacy
+Using a unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
+Respects users privacy
 * **Custom Caching**
-** SOSERE is efficient, caching related posts data as your site is visited.
+SOSERE is efficient, caching related posts data as your site is visited.
 
 This plugin requires PHP 5, MySQL 4.1, and WordPress 3.0 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
@@ -36,7 +36,7 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 **Like SOSERE?**
 Spread it to the world! Leave a review or simple say: "Thank you, good job."
 [the Reviews](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/)
-Stay informed and follow us on Twitter: [SOSORE on Twitter] (https://twitter.com/sosere_rec)
+Stay informed and follow us on Twitter: (https://twitter.com/sosere_rec)
 
 == Installation ==
 = Single site installation =
