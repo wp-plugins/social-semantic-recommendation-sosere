@@ -5,7 +5,7 @@ Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
-Requires at least: 3.0
+Requires at least: 3.2
 Tested up to: 3.8.1
 Stable tag: trunk
 License: GPLv2 
@@ -39,19 +39,21 @@ It works out-of-the-box. Activate and enjoy.
 **Custom Caching**
 -----------------------------------------
 *  SOSERE is efficient, caching related posts data as your site is visited.
-
-
+<br />
 **Multilanguage support**
 -----------------------------------------
 
+* English - default, always included
+* German: Deutsch
+<br />
+<br />
 This plugin requires PHP 5, MySQL 4.1, and WordPress 3.0 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
-
+<br />
 **Like SOSERE?**
 -----------------------------------------
-*  Spread it to the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) or simple leave: "Thank you, good job."
-*  Stay informed and follow us [on Twitter](https://twitter.com/sosere_rec)
+*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) stay informed and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 == Installation ==
 = Single site installation =
@@ -107,8 +109,4 @@ You can also use it to compare e.g. performance and page impressions (A/B testin
 
 Yes. 
 
-== Translations ==
-
-* English - default, always included
-* German: Deutsch
 
