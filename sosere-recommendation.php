@@ -3,11 +3,11 @@
  * Plugin Name: SOSERE Social Semantic Recommendation
  * Plugin URI: http://www.sosere.com
  * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and need up to 8 weeks (depend on your blog tariffic) to build the used posts network. See settings for customesation.
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPL2
- * Text Domain: sosere_rec
+ * Text Domain: sosere-rec
  * Domain Path: /languages/
  */
  
@@ -41,9 +41,9 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit();
 } //end: if(!function_exists('add_action'))
 
-define( 'SOSERE_VERSION', '1.0.0' );
+define( 'SOSERE_VERSION', '1.3.1' );
 
-define( 'SOSERE_REQUIRED_WP_VERSION', '3.0' );
+define( 'SOSERE_REQUIRED_WP_VERSION', '3.2' );
 
 if ( ! defined( 'SOSERE_PLUGIN_ROOT_DIR' ) )
 	define( 'SOSERE_PLUGIN_ROOT_DIR', plugin_dir_path( __FILE__) );
@@ -52,7 +52,7 @@ if ( ! defined( 'SOSERE_PLUGIN_SUBDIR' ) )
 	define( 'SOSERE_PLUGIN_SUBDIR', dirname( plugin_basename( __FILE__ ) ) ); 
 
 if ( ! defined( 'SOSERE_PLUGIN_DIR' ) )
-	define( 'SOSERE_PLUGIN_DIR', plugin_dir_url( __FILE__ ) );
+	define( 'SOSERE_PLUGIN_DIR', plugins_url().'/'.basename( dirname( __FILE__ ) ).'/' );
 
 if ( ! defined( 'SOSERE_ADMIN_READ_CAPABILITY' ) )
 	define( 'SOSERE_ADMIN_READ_CAPABILITY', 'edit_posts' );

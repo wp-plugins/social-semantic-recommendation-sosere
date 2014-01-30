@@ -140,9 +140,7 @@
 				if ( true == $this->use_cache ) {
 					$cached = get_post_meta( $this->post->ID, 'soseredbviewedpostscache' );
 					$cachetime = get_post_meta( $this->post->ID, 'soseredbviewedpostscachedate' );
-					if ( is_array( $cachetime ) ) {
-						$cachetime = (int) $cachetime[0];
-					}
+					$cachetime = (int) $cachetime[0];
 
 					// diff in hours
 					if ( isset( $cachetime ) ){
@@ -173,28 +171,35 @@
 				// get post categories
 				$category_array = get_the_category( $this->post->ID );
 				
-				if( ( is_array( $category_array ) || is_array( $taxonomy_id_array ) ) && ( 0 < count( $taxonomy_id_array) || 0 < count( $category_array ) ) ) {
 					// get category id's
 					foreach ( $category_array as $category ) {	
 						$category_id_array[] = $category->cat_ID;
 					}
-					$posts_arr = get_posts( array(
+					$args_array = array(
 						'posts_per_page'   => 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ),
-						'tax_query' => array(
-						'relation' => 'OR',
-							array( 	//'taxonomy'  => 'category',
-									'field' 	=> 'cat_ID',
-									'terms' 	=>  $category_id_array ),
-							array(  'taxonomy'  => 'post_tag',
-									'field' 	=> 'term_id',
-									'terms' 	=>  $taxonomy_id_array ),
-						),
+						
 						'post_type'   	   => explode( ',', $this->included_post_types ),
 						'post_status'	   => 'publish',
 						'orderby' 		   => 'rand',
 						'suppress_filters' => false
-					 ));
-				}
+					 );
+					 if( is_array( $category_array ) && is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) && 0 < count( $category_array ) ) {
+						$args_array['tax_query'] = array(
+											'relation' => 'OR',
+											array(  'field' 	=> 'cat_ID',
+													'terms' 	=>  $category_id_array ),
+											array(  'taxonomy'  => 'post_tag',
+													'field' 	=> 'term_id',
+													'terms' 	=>  $taxonomy_id_array ),
+											);
+					 } elseif( is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) ) {
+					    $args_array['tag__in'] 	    = $taxonomy_id_array;
+					 } elseif ( is_array( $category_array ) && 0 < count( $category_array ) ) {
+						$args_array['category__in'] = $category_id_array;
+					 }
+					 // fire query
+					 $posts_arr = get_posts( $args_array );
+
 				// add to categories selection
 				if ( isset( $posts_arr ) && is_array( $posts_arr ) ) {
 					foreach ( $posts_arr as $post_obj ) {
@@ -315,41 +320,29 @@
 			// return output as html string else
 			$return_string = '<!-- begin sosere recommendation (sosere.com) output -->'
 							.'<div class="sosere-recommendation entry-utility"><legend>'
-							.$this->recommedation_box_title
+							.__( $this->recommedation_box_title, 'sosere-rec' )
 							.'</legend><ul class="sosere-recommendation">';
 							
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 
 				foreach ( $selected_posts as $post_obj ) {
 					if ( is_object( $post_obj ) ) {
-						if ( true === $this->show_thumbs_title ) {
+						if ( true === $this->show_thumbs || true === $this->show_thumbs_title ) {
 							// get thumbs
 							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post_obj->ID ), 'thumbnail' );
 							is_array( $thumb ) ? $url = $thumb['0'] : $url = $this->default_thumbnail_img_url;
 
 							// build response string
 							$return_string .= '<li class="sosere-recommendation-thumbs">'
-							.'<a href="'.get_permalink( $post_obj->ID ).'">'
-							.'<div class="no-thumb">';
-							isset( $url ) ? $return_string .='<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': '';
-							$return_string .= '</div><p>'.$post_obj->post_title.'</p>'
-							.'</a>'
-							.'</li>';
+							.'<a href="'.get_permalink( $post_obj->ID ).'">';
+							isset( $url ) ? $return_string .= '<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': $return_string .= '<div class="no-thumb"></div>';
 							
-						} elseif ( true === $this->show_thumbs ) {
-							// get thumbs
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post_obj->ID ), 'thumbnail' );
-							is_array( $thumb ) ? $url = $thumb['0'] : $url = $this->default_thumbnail_img_url;
-
-							// build response string
-							$return_string .= '<li class="sosere-recommendation-thumbs">'
-							.'<a href="'.get_permalink( $post_obj->ID ).'">'
-							.'<div class="no-thumb">';
-							isset( $url ) ? $return_string .= '<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': '';
-							$return_string .= '</div><p></p>'
-							.'</a>'
-							.'</li>';
-							
+							// add title
+							if ( true === $this->show_thumbs_title ) {
+								$return_string .= '<p>'.$post_obj->post_title.'</p>';
+							} 
+							// close link, list
+							$return_string .= '</a></li>';
 						} else {
 							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'.$post_obj->post_title.'</a></li>';
 						}
