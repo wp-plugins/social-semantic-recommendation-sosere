@@ -1,0 +1,43 @@
+/*
+* sosere recommedation
+* base style
+*/
+div.sosere-recommendation {
+	border: none;
+	margin-bottom: 10px;
+	padding-top: 20px;
+	float: left;
+	width: 100%;
+	}
+	
+.sosere-recommendation  legend {
+	color: #333333;
+	float: left;
+	margin: -30px 0px -120px 20px;
+	padding: 0 20px;
+	background: #FFFFFF;
+	}
+	
+.sosere-recommendation ul {
+		width: 100%;
+		clear: both;
+	}
+li.sosere-recommendation-thumbs  {
+	display: inline;
+	list-style: none;
+	float: left; 
+	width:	33%;
+}
+.sosere-recommendation-thumbs  img{
+	width: 150px;
+	height: 150px;
+}
+.no-thumb {
+	width: 150px;
+	height: 150px;
+	background: #F5F4DE;
+	border: 1px solid #BBBBBB;
+}
+
+
+	
