@@ -163,7 +163,7 @@
 				// add filter (post age)
 				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				add_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
-				add_filter( 'posts_groupby', array( $this, 'search_groupby' ) );
+
 				
 				// get tag id's
 				$taxonomy_id_array = wp_get_post_tags( $this->post->ID, array( "fields" => "ids" ) );	
@@ -172,6 +172,7 @@
 				$category_array = get_the_category( $this->post->ID );
 				
 					// get category id's
+					$category_id_array = array();
 					foreach ( $category_array as $category ) {	
 						$category_id_array[] = $category->cat_ID;
 					}
@@ -183,10 +184,11 @@
 						'orderby' 		   => 'rand',
 						'suppress_filters' => false
 					 );
-					 if( is_array( $category_array ) && is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) && 0 < count( $category_array ) ) {
+					 if( is_array( $category_id_array ) && is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) && 0 < count( $category_id_array ) ) {
 						$args_array['tax_query'] = array(
 											'relation' => 'OR',
-											array(  'field' 	=> 'cat_ID',
+											array(  'taxonomy'  => 'category',
+													'field' 	=> 'cat_ID',
 													'terms' 	=>  $category_id_array ),
 											array(  'taxonomy'  => 'post_tag',
 													'field' 	=> 'term_id',
@@ -194,7 +196,7 @@
 											);
 					 } elseif( is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) ) {
 					    $args_array['tag__in'] 	    = $taxonomy_id_array;
-					 } elseif ( is_array( $category_array ) && 0 < count( $category_array ) ) {
+					 } elseif ( is_array( $category_id_array ) && 0 < count( $category_id_array ) ) {
 						$args_array['category__in'] = $category_id_array;
 					 }
 					 // fire query
@@ -211,8 +213,6 @@
 				
 				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
-				remove_filter( 'posts_groupby', array( $this, 'search_groupby' ) );
-
 
 				// merge selections
 				$all_selection = array_merge(  $db_selection, $this->user_selection );
@@ -253,7 +253,7 @@
 		 */
 		private function add_post_to_db() {
 		
-			if ( isset( $_SESSION['sosereviewedposts'] ) ) {
+			if ( isset( $_SESSION['sosereviewedposts'] ) && is_array( $_SESSION['sosereviewedposts'] )) {
 				$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
 			}
 					$network_data = get_post_meta( $this->post->ID, 'soseredbviewedposts' );
@@ -281,19 +281,11 @@
 							if ( $this->post->ID != end( $this->viewed_post_IDs ) ){
 								// add to network
 								foreach ( $this->viewed_post_IDs as $sp_id ) {
-									$new_network_data[] = $sp_id . ':' . $this->now;	
-								}
-							} elseif ( isset( $this->viewed_post_IDs ) && is_array( $this->viewed_post_IDs ) ) {  
-								$sp_id = null;
-								$pos = array_search( $this->post->ID, $this->viewed_post_IDs );
-								if ( 0 < $pos ) {
-									$vpi_rest = array_slice( $this->viewed_post_IDs, $pos - count( $this->viewed_post_IDs ) );
-									foreach ( $vpi_rest as $sp_id ) {
+									if ( (int)$this->post->ID !== (int)$sp_id ) {
 										$new_network_data[] = $sp_id . ':' . $this->now;
 									}
 								}
-								
-							}
+							} 
 						// safe to db
 						if ( isset( $new_network_data ) && is_array( $new_network_data ) ) {
 							$new_network_data_DB = implode( ',', $new_network_data );
@@ -305,7 +297,6 @@
 							}
 						}
 					}
-			
 		}
 		 
 		 /**
@@ -450,10 +441,9 @@
 						$_SESSION['sosereviewedposts'][] = (int)$this->post->ID;
 					}
 				} else {
-					$_SESSION['sosereviewedposts'][] = (int)$this->post->ID;
+					$_SESSION['sosereviewedposts'] = array( (int)$this->post->ID );
 				}
 			}
-
 		}
 		
 		 
@@ -476,17 +466,7 @@
 		function search_distinct() {
 			return ""; // filter has no effect
 		}
-		
-		function search_groupby($groupby) {
-			global $wpdb;
-			/*if( 0 < strlen($groupby) ) {
-				$groupby = ' ' . $wpdb->term_relationships . '.term_taxonomy_id';
-			
-			} else {
-				$groupby .= ', ' . $wpdb->term_relationships . '.term_taxonomy_id';
-			}*/
-			return null;// $groupby;
-		}
+
 
 
 	} // end class sosereController

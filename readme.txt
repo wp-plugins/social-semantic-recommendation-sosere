@@ -47,13 +47,13 @@ It works out-of-the-box. Activate and enjoy.
 * German: Deutsch
 <br />
 <br />
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.0 or greater. 
+This plugin requires PHP 5, MySQL 4.1, and WordPress 3.2 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
 <br />
 **Like SOSERE?**
 -----------------------------------------
-*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) stay informed and follow us [on Twitter](https://twitter.com/sosere_rec)
+*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 == Installation ==
 = Single site installation =
