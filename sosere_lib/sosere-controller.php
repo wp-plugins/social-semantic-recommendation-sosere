@@ -318,7 +318,9 @@
 
 				foreach ( $selected_posts as $post_obj ) {
 					if ( is_object( $post_obj ) ) {
-
+						$url = null;
+						$post_thumbnail_id = null;
+						$thumb = null;
 						if ( true === $this->show_thumbs || true === $this->show_thumbs_title ) {
 							// get thumbs
 							$post_thumbnail_id = get_post_thumbnail_id( $post_obj->ID );
@@ -332,8 +334,10 @@
 									$thumb = array( $matches[1] );
 								}
 							}
-							if ( isset( $thumb ) ) {
-								is_array( $thumb ) ? $url = $thumb[0] : $url = $this->default_thumbnail_img_url;
+							if ( isset( $thumb ) && is_array( $thumb ) ) {
+								 $url = $thumb[0];
+							} elseif ( 0 < strlen( $this->default_thumbnail_img_url ) ) {
+							  $url = $this->default_thumbnail_img_url;
 							}
 							
 							// build response string

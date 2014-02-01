@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -121,3 +121,6 @@ Yes.
 
 = 1.4.1 =
 * minor fix
+
+= 1.4.2 =
+* minor fix (thumbs view)
