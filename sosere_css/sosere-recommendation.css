@@ -21,14 +21,16 @@ div.sosere-recommendation {
 .sosere-recommendation ul {
 		width: 100%;
 		clear: both;
-		padding-left: 18px;
-		
 	}
 li.sosere-recommendation-thumbs  {
 	display: inline;
 	list-style: none;
 	float: left; 
 	width:	33%;
+}
+.sosere-recommendation-thumbs  img{
+	width: 150px;
+	height: 150px;
 }
 .no-thumb {
 	width: 150px;

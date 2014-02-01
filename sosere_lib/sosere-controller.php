@@ -140,9 +140,7 @@
 				if ( true == $this->use_cache ) {
 					$cached = get_post_meta( $this->post->ID, 'soseredbviewedpostscache' );
 					$cachetime = get_post_meta( $this->post->ID, 'soseredbviewedpostscachedate' );
-					if ( is_array( $cachetime ) ) {
-						$cachetime = (int) $cachetime[0];
-					}
+					$cachetime = (int) $cachetime[0];
 
 					// diff in hours
 					if ( isset( $cachetime ) ){
@@ -165,7 +163,7 @@
 				// add filter (post age)
 				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				add_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
-				add_filter( 'posts_groupby', array( $this, 'search_groupby' ) );
+
 				
 				// get tag id's
 				$taxonomy_id_array = wp_get_post_tags( $this->post->ID, array( "fields" => "ids" ) );	
@@ -173,28 +171,37 @@
 				// get post categories
 				$category_array = get_the_category( $this->post->ID );
 				
-				if( ( is_array( $category_array ) || is_array( $taxonomy_id_array ) ) && ( 0 < count( $taxonomy_id_array) || 0 < count( $category_array ) ) ) {
 					// get category id's
+					$category_id_array = array();
 					foreach ( $category_array as $category ) {	
 						$category_id_array[] = $category->cat_ID;
 					}
-					$posts_arr = get_posts( array(
+					$args_array = array(
 						'posts_per_page'   => 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ),
-						'tax_query' => array(
-						'relation' => 'OR',
-							array( 	//'taxonomy'  => 'category',
-									'field' 	=> 'cat_ID',
-									'terms' 	=>  $category_id_array ),
-							array(  'taxonomy'  => 'post_tag',
-									'field' 	=> 'term_id',
-									'terms' 	=>  $taxonomy_id_array ),
-						),
+						
 						'post_type'   	   => explode( ',', $this->included_post_types ),
 						'post_status'	   => 'publish',
 						'orderby' 		   => 'rand',
 						'suppress_filters' => false
-					 ));
-				}
+					 );
+					 if( is_array( $category_id_array ) && is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) && 0 < count( $category_id_array ) ) {
+						$args_array['tax_query'] = array(
+											'relation' => 'OR',
+											array(  'taxonomy'  => 'category',
+													'field' 	=> 'cat_ID',
+													'terms' 	=>  $category_id_array ),
+											array(  'taxonomy'  => 'post_tag',
+													'field' 	=> 'term_id',
+													'terms' 	=>  $taxonomy_id_array ),
+											);
+					 } elseif( is_array( $taxonomy_id_array ) && 0 < count( $taxonomy_id_array) ) {
+					    $args_array['tag__in'] 	    = $taxonomy_id_array;
+					 } elseif ( is_array( $category_id_array ) && 0 < count( $category_id_array ) ) {
+						$args_array['category__in'] = $category_id_array;
+					 }
+					 // fire query
+					 $posts_arr = get_posts( $args_array );
+
 				// add to categories selection
 				if ( isset( $posts_arr ) && is_array( $posts_arr ) ) {
 					foreach ( $posts_arr as $post_obj ) {
@@ -206,8 +213,6 @@
 				
 				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
-				remove_filter( 'posts_groupby', array( $this, 'search_groupby' ) );
-
 
 				// merge selections
 				$all_selection = array_merge(  $db_selection, $this->user_selection );
@@ -248,7 +253,7 @@
 		 */
 		private function add_post_to_db() {
 		
-			if ( isset( $_SESSION['sosereviewedposts'] ) ) {
+			if ( isset( $_SESSION['sosereviewedposts'] ) && is_array( $_SESSION['sosereviewedposts'] )) {
 				$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
 			}
 					$network_data = get_post_meta( $this->post->ID, 'soseredbviewedposts' );
@@ -276,19 +281,11 @@
 							if ( $this->post->ID != end( $this->viewed_post_IDs ) ){
 								// add to network
 								foreach ( $this->viewed_post_IDs as $sp_id ) {
-									$new_network_data[] = $sp_id . ':' . $this->now;	
-								}
-							} elseif ( isset( $this->viewed_post_IDs ) && is_array( $this->viewed_post_IDs ) ) {  
-								$sp_id = null;
-								$pos = array_search( $this->post->ID, $this->viewed_post_IDs );
-								if ( 0 < $pos ) {
-									$vpi_rest = array_slice( $this->viewed_post_IDs, $pos - count( $this->viewed_post_IDs ) );
-									foreach ( $vpi_rest as $sp_id ) {
+									if ( (int)$this->post->ID !== (int)$sp_id ) {
 										$new_network_data[] = $sp_id . ':' . $this->now;
 									}
 								}
-								
-							}
+							} 
 						// safe to db
 						if ( isset( $new_network_data ) && is_array( $new_network_data ) ) {
 							$new_network_data_DB = implode( ',', $new_network_data );
@@ -300,7 +297,6 @@
 							}
 						}
 					}
-			
 		}
 		 
 		 /**
@@ -315,41 +311,42 @@
 			// return output as html string else
 			$return_string = '<!-- begin sosere recommendation (sosere.com) output -->'
 							.'<div class="sosere-recommendation entry-utility"><legend>'
-							.$this->recommedation_box_title
+							.__( $this->recommedation_box_title, 'sosere-rec' )
 							.'</legend><ul class="sosere-recommendation">';
 							
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 
 				foreach ( $selected_posts as $post_obj ) {
 					if ( is_object( $post_obj ) ) {
-						if ( true === $this->show_thumbs_title ) {
-							// get thumbs
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post_obj->ID ), 'thumbnail' );
-							is_array( $thumb ) ? $url = $thumb['0'] : $url = $this->default_thumbnail_img_url;
 
+						if ( true === $this->show_thumbs || true === $this->show_thumbs_title ) {
+							// get thumbs
+							$post_thumbnail_id = get_post_thumbnail_id( $post_obj->ID );
+							
+							if ( '' != $post_thumbnail_id ) {
+								$thumb = wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' );
+							} else {
+								// get post attachment
+								$output = preg_match( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_obj->post_content, $matches );
+								if ( isset( $matches[1] ) ) {
+									$thumb = array( $matches[1] );
+								}
+							}
+							if ( isset( $thumb ) ) {
+								is_array( $thumb ) ? $url = $thumb[0] : $url = $this->default_thumbnail_img_url;
+							}
+							
 							// build response string
 							$return_string .= '<li class="sosere-recommendation-thumbs">'
-							.'<a href="'.get_permalink( $post_obj->ID ).'">'
-							.'<div class="no-thumb">';
-							isset( $url ) ? $return_string .='<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': '';
-							$return_string .= '</div><p>'.$post_obj->post_title.'</p>'
-							.'</a>'
-							.'</li>';
+							.'<a href="'.get_permalink( $post_obj->ID ).'">';
+							isset( $url ) ? $return_string .= '<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': $return_string .= '<div class="no-thumb"></div>';
 							
-						} elseif ( true === $this->show_thumbs ) {
-							// get thumbs
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post_obj->ID ), 'thumbnail' );
-							is_array( $thumb ) ? $url = $thumb['0'] : $url = $this->default_thumbnail_img_url;
-
-							// build response string
-							$return_string .= '<li class="sosere-recommendation-thumbs">'
-							.'<a href="'.get_permalink( $post_obj->ID ).'">'
-							.'<div class="no-thumb">';
-							isset( $url ) ? $return_string .= '<img src="'.$url.'" alt="'.$post_obj->post_title.'" title="'.$post_obj->post_title.'" />': '';
-							$return_string .= '</div><p></p>'
-							.'</a>'
-							.'</li>';
-							
+							// add title
+							if ( true === $this->show_thumbs_title ) {
+								$return_string .= '<p>'.$post_obj->post_title.'</p>';
+							} 
+							// close link, list
+							$return_string .= '</a></li>';
 						} else {
 							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'.$post_obj->post_title.'</a></li>';
 						}
@@ -457,10 +454,9 @@
 						$_SESSION['sosereviewedposts'][] = (int)$this->post->ID;
 					}
 				} else {
-					$_SESSION['sosereviewedposts'][] = (int)$this->post->ID;
+					$_SESSION['sosereviewedposts'] = array( (int)$this->post->ID );
 				}
 			}
-
 		}
 		
 		 
@@ -477,25 +473,14 @@
 			return $where;
 		}
 		
-		/*
-		*	
+		/**
+		* disable distinct filter
+		* @since 1.0
 		*/
 		function search_distinct() {
 			return ""; // filter has no effect
 		}
 		
-		function search_groupby($groupby) {
-			global $wpdb;
-			/*if( 0 < strlen($groupby) ) {
-				$groupby = ' ' . $wpdb->term_relationships . '.term_taxonomy_id';
-			
-			} else {
-				$groupby .= ', ' . $wpdb->term_relationships . '.term_taxonomy_id';
-			}*/
-			return null;// $groupby;
-		}
-
-
 	} // end class sosereController
 	
 		new Sosere_Controller();

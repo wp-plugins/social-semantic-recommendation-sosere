@@ -5,9 +5,9 @@ Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
-Requires at least: 3.0
+Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: trunk
+Stable tag: 1.4.1
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -24,6 +24,7 @@ It works out-of-the-box. Activate and enjoy.
 -----------------------------------------
 *  Automatic linking of related content at the bottom of each post/page.
 *  Thumbnails, thumbnails with post titles or list view
+*  Post featured image, first post image or default plugin image as thumbnail
 *  Customizable css style
 *  Customizable recommendation box title
 <br />
@@ -31,7 +32,7 @@ It works out-of-the-box. Activate and enjoy.
 -----------------------------------------
 *  Customizable recommended entry types
 <br />
-**An unique social-semantic network analysis algorithm** 
+**An unique social-semantic network analysis bases algorithm** 
 -----------------------------------------
 *  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
 *  Respects users privacy
@@ -39,19 +40,21 @@ It works out-of-the-box. Activate and enjoy.
 **Custom Caching**
 -----------------------------------------
 *  SOSERE is efficient, caching related posts data as your site is visited.
-
-
+<br />
 **Multilanguage support**
 -----------------------------------------
 
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.0 or greater. 
+* English - default, always included
+* German: Deutsch
+<br />
+<br />
+This plugin requires PHP 5, MySQL 4.1, and WordPress 3.2 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
-
+<br />
 **Like SOSERE?**
 -----------------------------------------
-*  Spread it to the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) or simple leave: "Thank you, good job."
-*  Stay informed and follow us [on Twitter](https://twitter.com/sosere_rec)
+*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 == Installation ==
 = Single site installation =
@@ -107,8 +110,14 @@ You can also use it to compare e.g. performance and page impressions (A/B testin
 
 Yes. 
 
-== Translations ==
+== Changelog ==
 
-* English - default, always included
-* German: Deutsch
+= 1.3.2 =
+* Performance optimisations 
+* Minor changes in readme.txt
 
+= 1.4 =
+* Add usage of first post image if thumbnail view and no featured image selected
+
+= 1.4.1 =
+* minor fix
