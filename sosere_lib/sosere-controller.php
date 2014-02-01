@@ -332,7 +332,9 @@
 									$thumb = array( $matches[1] );
 								}
 							}
-							is_array( $thumb ) ? $url = $thumb[0] : $url = $this->default_thumbnail_img_url;
+							if ( isset( $thumb ) ) {
+								is_array( $thumb ) ? $url = $thumb[0] : $url = $this->default_thumbnail_img_url;
+							}
 							
 							// build response string
 							$return_string .= '<li class="sosere-recommendation-thumbs">'
