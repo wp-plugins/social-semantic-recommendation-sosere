@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 4.1.2
+Stable tag: 1.4
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -24,6 +24,7 @@ It works out-of-the-box. Activate and enjoy.
 -----------------------------------------
 *  Automatic linking of related content at the bottom of each post/page.
 *  Thumbnails, thumbnails with post titles or list view
+*  Post featured image, first post image or default plugin image as thumbnail
 *  Customizable css style
 *  Customizable recommendation box title
 <br />
@@ -31,7 +32,7 @@ It works out-of-the-box. Activate and enjoy.
 -----------------------------------------
 *  Customizable recommended entry types
 <br />
-**An unique social-semantic network analysis algorithm** 
+**An unique social-semantic network analysis bases algorithm** 
 -----------------------------------------
 *  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
 *  Respects users privacy
@@ -114,3 +115,6 @@ Yes.
 = 1.3.2 =
 * Performance optimisations 
 * Minor changes in readme.txt
+
+= 1.4 =
+* Add usage of first post image if thumbnail view and no featured image selected

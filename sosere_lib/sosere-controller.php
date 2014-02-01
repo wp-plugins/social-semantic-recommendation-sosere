@@ -318,11 +318,22 @@
 
 				foreach ( $selected_posts as $post_obj ) {
 					if ( is_object( $post_obj ) ) {
+
 						if ( true === $this->show_thumbs || true === $this->show_thumbs_title ) {
 							// get thumbs
-							$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post_obj->ID ), 'thumbnail' );
-							is_array( $thumb ) ? $url = $thumb['0'] : $url = $this->default_thumbnail_img_url;
-
+							$post_thumbnail_id = get_post_thumbnail_id( $post_obj->ID );
+							
+							if ( '' != $post_thumbnail_id ) {
+								$thumb = wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' );
+							} else {
+								// get post attachment
+								$output = preg_match( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post_obj->post_content, $matches );
+								if ( isset( $matches[1] ) ) {
+									$thumb = array( $matches[1] );
+								}
+							}
+							is_array( $thumb ) ? $url = $thumb[0] : $url = $this->default_thumbnail_img_url;
+							
 							// build response string
 							$return_string .= '<li class="sosere-recommendation-thumbs">'
 							.'<a href="'.get_permalink( $post_obj->ID ).'">';
@@ -460,15 +471,14 @@
 			return $where;
 		}
 		
-		/*
-		*	
+		/**
+		* disable distinct filter
+		* @since 1.0
 		*/
 		function search_distinct() {
 			return ""; // filter has no effect
 		}
-
-
-
+		
 	} // end class sosereController
 	
 		new Sosere_Controller();

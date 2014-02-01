@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: SOSERE Social Semantic Recommendation
+ * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
  * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and need up to 8 weeks (depend on your blog tariffic) to build the used posts network. See settings for customisation.
- * Version: 1.3.2
+ * Version: 1.4
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPL2
@@ -40,8 +40,6 @@ if ( ! function_exists( 'add_action' ) ) {
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 } //end: if(!function_exists('add_action'))
-
-define( 'SOSERE_VERSION', '1.3.1' );
 
 define( 'SOSERE_REQUIRED_WP_VERSION', '3.2' );
 
