@@ -3,7 +3,7 @@
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
  * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and need up to 8 weeks (depend on your blog tariffic) to build the used posts network. See settings for customisation.
- * Version: 1.4.2
+ * Version: 1.4.3
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPL2
@@ -88,18 +88,19 @@ register_activation_hook(   __FILE__, 'sosere_setup_on_activation' );
 function sosere_setup_on_activation() {
     if ( ! current_user_can( 'activate_plugins' ) )
         return;
-    $plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-    check_admin_referer( "activate-plugin_{$plugin}" );
-	$sosere_default_options = array(
-		"use_cache" => "on",
-		"max_cache_time" => "24",
-		"recommedation_box_title" => __( "Recommended for you" ),
-		"result_count" => "3",
-		"max_post_age" => "10000",
-		"max_view_history" => "30"
-	);
-	update_option( 'plugin_sosere', $sosere_default_options );
-	
+	if ( 0 == count( get_option( 'plugin_sosere' ) ) ) {
+		$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+		check_admin_referer( "activate-plugin_{$plugin}" );
+		$sosere_default_options = array(
+			"use_cache" => "on",
+			"max_cache_time" => "24",
+			"recommedation_box_title" => __( "Recommended for you" ),
+			"result_count" => "3",
+			"max_post_age" => "10000",
+			"max_view_history" => "30"
+		);
+		update_option( 'plugin_sosere', $sosere_default_options );
+	}
 }
 
 

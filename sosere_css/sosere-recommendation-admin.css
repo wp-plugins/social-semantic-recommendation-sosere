@@ -5,6 +5,8 @@
 }
 #default_thumbnail_img {
 	float: left;
+	max-width: 150px;
+	max-height: 150px;
 }
 #default_thumb_button {
 	margin-left: 20px;

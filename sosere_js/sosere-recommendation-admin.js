@@ -23,10 +23,15 @@ jQuery('#default_thumb_button').live('click', function( event ){
 	file_frame.on( 'select', function() {
 		// multiple is set to false so only get one image from the uploader
 		attachment = file_frame.state().get('selection').first().toJSON();
-		 
+		if ( attachment.sizes.thumbnail ) {
+			jQuery('#default_thumbnail_img').attr('src', attachment.sizes.thumbnail.url);
+			jQuery('#default_thumbnail_img_url').val(attachment.sizes.thumbnail.url);
+		} else {
+			jQuery('#default_thumbnail_img').attr('src', attachment.sizes.full.url);
+			jQuery('#default_thumbnail_img_url').val(attachment.sizes.full.url);
+		}
 		// set attachment.id and attachment.url
-		jQuery('#default_thumbnail_img').attr('src', attachment.sizes.thumbnail.url);
-		jQuery('#default_thumbnail_img_url').val(attachment.sizes.thumbnail.url);
+		
 		jQuery('#default_thumbnail_img_id').val(attachment.id);
 	});
 	 

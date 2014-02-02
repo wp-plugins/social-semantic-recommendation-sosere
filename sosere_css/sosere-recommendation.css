@@ -8,6 +8,8 @@ div.sosere-recommendation {
 	padding-top: 20px;
 	float: left;
 	width: 100%;
+	margin: 0 0 0 0;
+
 	}
 	
 .sosere-recommendation  legend {
@@ -21,14 +23,16 @@ div.sosere-recommendation {
 .sosere-recommendation ul {
 		width: 100%;
 		clear: both;
+		margin: 0 0 0 0;
 	}
-li.sosere-recommendation-thumbs  {
+li.sosere-recommendation-thumbs {
 	display: inline;
 	list-style: none;
 	float: left; 
 	width:	33%;
+	margin: 0 0 0 0 !important;
 }
-.sosere-recommendation-thumbs  img{
+.sosere-recommendation-thumbs  img {
 	width: 150px;
 	height: 150px;
 }
@@ -38,6 +42,3 @@ li.sosere-recommendation-thumbs  {
 	background: #F5F4DE;
 	border: 1px solid #BBBBBB;
 }
-
-
-	
