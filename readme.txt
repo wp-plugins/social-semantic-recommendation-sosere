@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -18,7 +18,7 @@ Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post t
 helps to engage readers and show them what else is worth their reading time. Intelligent, customizable, efficient and easy to use.  No need to add any PHP tags. 
 It works out-of-the-box. Activate and enjoy.  
 
-**SOSERE Community Edition Features**
+**SOSERE Features**
 <br />
 **Customizable view** 
 -----------------------------------------
@@ -127,3 +127,6 @@ Yes.
 
 = 1.4.3 =
 * improve pre-setting options and minor fixes
+
+= 1.4.4 =
+* minor fix
