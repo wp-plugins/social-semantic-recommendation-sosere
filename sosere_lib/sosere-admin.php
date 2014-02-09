@@ -28,6 +28,8 @@
 		 */
 		public function __construct()
 		{
+			$this->options = get_option( 'plugin_sosere' );
+			
 			add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 			add_action( 'admin_init', array( $this, 'page_init' ) );
 			add_action( 'admin_head', array( $this, 'admin_include_register') );
@@ -84,8 +86,7 @@
 		 */
 		public function create_admin_page()
 		{
-			// Set class property
-			$this->options = get_option( 'plugin_sosere' );
+			
 			?>
 			<div class="wrap">
 				<h2>SOSERE</h2>           
@@ -105,10 +106,7 @@
 		 * Register and add settings
 		 */
 		public function page_init()
-		{       
-			// load langs
-			load_plugin_textdomain( 'sosere-rec', false, SOSERE_PLUGIN_SUBDIR . '/sosere_languages/' );
-					
+		{
 			register_setting(
 				'sosere_option_group', // Option group
 				'plugin_sosere' // Option name
@@ -405,7 +403,7 @@
 			if ( current_user_can( 'activate_plugins' ) ) {
 				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 				check_admin_referer( "activate-plugin_{$plugin}" );
-				if ( false === get_option( 'plugin_sosere' ) ) {
+				if ( false === $this->options ) {
 				// preset options
 					$sosere_default_options = array(
 						"use_cache" 				=> "on",
@@ -415,13 +413,13 @@
 						"max_post_age" 				=> "0",
 						"max_view_history" 			=> "30"
 					);
-					add_option ( 'plugin_sosere', $sosere_default_options) or
-					update_option ( 'plugin_sosere', $sosere_default_options);
+					$this->options = $sosere_default_options;
+					update_option ( 'plugin_sosere', $this->options );
 					
 				} 
 				// activation flag 
-				add_option ( 'plugin_sosere', array( 'activated'=>true ) ) or
-				update_option ( 'plugin_sosere', array( 'activated'=>true ));
+				$this->options['activated'] = true;
+				update_option ( 'plugin_sosere', $this->options);
 			} else {
 				return;
 			}
@@ -434,8 +432,8 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_activated() {
-			add_option ( 'plugin_sosere', array( 'activated'=>true ) ) or
-			update_option ( 'plugin_sosere', array( 'activated'=>true ));
+			$this->options['activated'] = true;
+			update_option ( 'plugin_sosere', $this->options );
 			return;
 			
 		}
@@ -455,7 +453,8 @@
 					$activation_msg .= '</p>';
 					$activation_msg .= '</div><!-- /.updated -->';
 					echo $activation_msg;
-					update_option ( 'plugin_sosere', array( 'activated'=>false ) );
+					$this->options['activated'] = false;
+					update_option ( 'plugin_sosere', $this->options );
 				}
 			}
 			return;
