@@ -403,6 +403,8 @@
 			if ( current_user_can( 'activate_plugins' ) ) {
 				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 				check_admin_referer( "activate-plugin_{$plugin}" );
+				
+				$this->options = get_option( 'plugin_sosere' );
 				if ( false == $this->options || 0 <= count( $this->options ) ) {
 				// preset options
 					$sosere_default_options = array(
@@ -418,8 +420,7 @@
 					
 				} 
 				// activation flag 
-				$this->options['activated'] = true;
-				update_option ( 'plugin_sosere', $this->options);
+				update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
 			} else {
 				return;
 			}
@@ -432,8 +433,7 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_activated() {
-			$this->options['activated'] = true;
-			update_option ( 'plugin_sosere', $this->options );
+			update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
 			return;
 			
 		}
@@ -444,16 +444,17 @@
 		*/
 		public function sosere_msg_on_reactivation() {
 			global $hook_suffix;
+			
 			if ( $hook_suffix === 'plugins.php' && !isset($_POST['submit']) ) {
-				if ( isset( $this->options['activated']) && $this->options['activated'] === true ){
+				$activated = get_option( 'plugin_sosere_activated' );
+				if ( isset( $activated['plugin_sosere_activated']) && $activated['plugin_sosere_activated'] === true ){
 					$activation_msg = '<div class="updated">';
 					$activation_msg .= '<p>';
 					$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
 					$activation_msg .= '</p>';
 					$activation_msg .= '</div><!-- /.updated -->';
 					echo $activation_msg;
-					$this->options['activated'] = false;
-					update_option ( 'plugin_sosere', $this->options );
+					delete_option( 'plugin_sosere_activated' );
 				}
 			}
 			return;
