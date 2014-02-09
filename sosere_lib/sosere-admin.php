@@ -403,7 +403,7 @@
 			if ( current_user_can( 'activate_plugins' ) ) {
 				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 				check_admin_referer( "activate-plugin_{$plugin}" );
-				if ( 1 <= count( $this->options ) ) {
+				if ( false == $this->options || 0 <= count( $this->options ) ) {
 				// preset options
 					$sosere_default_options = array(
 						"use_cache" 				=> "on",
