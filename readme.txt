@@ -4,10 +4,10 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
-Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
+Tags: related posts, related content, pages, posts, related, sosere, multisite, multilingual, thumbnails, social, semantic, recommendations
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -72,9 +72,9 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 
 == Frequently Asked Questions ==
 
-**Common Questions about SOSERE Community Edition**
+**Common Questions about SOSERE**
 
-Below are Frequently Asked Questions about SOSERE Community Edition. 
+Below are Frequently Asked Questions about SOSERE. 
 
 If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/social-semantic-recommendation-sosere/). 
 

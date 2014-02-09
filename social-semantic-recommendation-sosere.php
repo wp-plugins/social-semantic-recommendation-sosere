@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
- * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and need up to 8 weeks (depend on your blog tariffic) to build the used posts network. See settings for customisation.
- * Version: 1.4.4
+ * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and fits perfect to each post individually.
+ * Version: 1.4.5
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPL2
@@ -41,69 +41,52 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit();
 } //end: if(!function_exists('add_action'))
 
-define( 'SOSERE_REQUIRED_WP_VERSION', '3.2' );
+if ( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
+	class Social_Semantic_Reommendation_SOSERE
+	{
+	/**
+     * php constructor
+     */
+    public function __construct()
+    {
+		// define constants
+		if ( ! defined( 'SOSERE_REQUIRED_WP_VERSION' ) )
+			define( 'SOSERE_REQUIRED_WP_VERSION', '3.2' );
 
-if ( ! defined( 'SOSERE_PLUGIN_ROOT_DIR' ) )
-	define( 'SOSERE_PLUGIN_ROOT_DIR', plugin_dir_path( __FILE__) );
+		if ( ! defined( 'SOSERE_PLUGIN_ROOT_DIR' ) )
+			define( 'SOSERE_PLUGIN_ROOT_DIR', plugin_dir_path( __FILE__) );
+			
+		if ( ! defined( 'SOSERE_PLUGIN_SUBDIR' ) )
+			define( 'SOSERE_PLUGIN_SUBDIR', dirname( plugin_basename( __FILE__ ) ) ); 
+
+		if ( ! defined( 'SOSERE_PLUGIN_DIR' ) )
+			define( 'SOSERE_PLUGIN_DIR', plugins_url().'/'.basename( dirname( __FILE__ ) ).'/' );
+			
+		if ( ! defined( 'SOSERE_PLUGIN_BASENAME' ) )
+			define( 'SOSERE_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );	
+
+		if ( ! defined( 'WP_VERSION' ) )
+			define( 'WP_VERSION', $GLOBALS['wp_version'] );
+
+		// check wp version
+		if( version_compare( WP_VERSION, SOSERE_REQUIRED_WP_VERSION, '<' ) ) {
+			return false;
+		}
+		
+		// load langs
+		load_plugin_textdomain( 'sosere-rec', false, SOSERE_PLUGIN_SUBDIR . '/sosere_languages/' );
+		
+		if ( ! is_admin() ) {
+			// require libs
+			require_once SOSERE_PLUGIN_ROOT_DIR . 'sosere_lib/sosere-controller.php';
+
+		} elseif ( is_admin() ) {
+			// require libs
+			require_once SOSERE_PLUGIN_ROOT_DIR . 'sosere_lib/sosere-admin.php';	    
+		}	
+	} // end constructor
 	
-if ( ! defined( 'SOSERE_PLUGIN_SUBDIR' ) )
-	define( 'SOSERE_PLUGIN_SUBDIR', dirname( plugin_basename( __FILE__ ) ) ); 
+	} // end class
+} // end if !class
 
-if ( ! defined( 'SOSERE_PLUGIN_DIR' ) )
-	define( 'SOSERE_PLUGIN_DIR', plugins_url().'/'.basename( dirname( __FILE__ ) ).'/' );
-
-if ( ! defined( 'SOSERE_ADMIN_READ_CAPABILITY' ) )
-	define( 'SOSERE_ADMIN_READ_CAPABILITY', 'edit_posts' );
-
-if ( ! defined( 'SOSERE_ADMIN_READ_WRITE_CAPABILITY' ) )
-	define( 'SOSERE_ADMIN_READ_WRITE_CAPABILITY', 'publish_pages' );
-
-	if ( ! defined( 'WP_VERSION' ) )
-	define( 'WP_VERSION', $GLOBALS['wp_version'] );
-
-// check wp version
-if( version_compare( WP_VERSION, SOSERE_REQUIRED_WP_VERSION, '<' ) ) {
-	return false;
-}
-
-if ( ! is_admin() ) {
-// require libs
-require_once SOSERE_PLUGIN_ROOT_DIR . 'sosere_lib/sosere-controller.php';
-
-} elseif ( is_admin() ) {
-// require libs
-require_once SOSERE_PLUGIN_ROOT_DIR . 'sosere_lib/sosere-admin.php';
-
-// register plugin activation 
-register_activation_hook(   __FILE__, 'sosere_setup_on_activation' );
-
-}	
-
-/*
-* activation settings
-* @since 1.0
-* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
-*/
-
-function sosere_setup_on_activation() {
-    if ( current_user_can( 'activate_plugins' ) && false === get_option( 'plugin_sosere' ) ) {
-		$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-		check_admin_referer( "activate-plugin_{$plugin}" );
-		$sosere_default_options = array(
-			"use_cache" 				=> "on",
-			"max_cache_time" 			=> "24",
-			"recommedation_box_title"   => __( "Recommended for you" ),
-			"result_count" 				=> "3",
-			"max_post_age" 				=> "0",
-			"max_view_history" 			=> "30"
-		);
-		add_option ( 'plugin_sosere', $sosere_default_options) or
-		update_option ( 'plugin_sosere', $sosere_default_options);
-	} else {
-		return;
-	}
-}
-
-
-
-
+new Social_Semantic_Reommendation_SOSERE();
