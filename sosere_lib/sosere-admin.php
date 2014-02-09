@@ -419,13 +419,9 @@
 					update_option ( 'plugin_sosere', $sosere_default_options);
 					
 				} 
-				// activation message 
-				$activation_msg = '<div class="updated">';
-				$activation_msg .= '<p>';
-				$activation_msg .= __( 'Thank you for using SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
-				$activation_msg .= '</p>';
-				$activation_msg .= '</div><!-- /.updated -->';
-				echo $activation_msg;
+				// activation flag 
+				add_option ( 'plugin_sosere', array( 'activated'=>true ) ) or
+				update_option ( 'plugin_sosere', array( 'activated'=>true ));
 			} else {
 				return;
 			}

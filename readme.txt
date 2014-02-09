@@ -130,3 +130,6 @@ Yes.
 
 = 1.4.4 =
 * minor fix
+
+= 1.4.5 =
+* added update messages and rewrote main plugin file
