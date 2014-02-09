@@ -403,7 +403,7 @@
 			if ( current_user_can( 'activate_plugins' ) ) {
 				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 				check_admin_referer( "activate-plugin_{$plugin}" );
-				if ( false === $this->options ) {
+				if ( 1 <= count( $this->options ) ) {
 				// preset options
 					$sosere_default_options = array(
 						"use_cache" 				=> "on",
@@ -445,8 +445,7 @@
 		public function sosere_msg_on_reactivation() {
 			global $hook_suffix;
 			if ( $hook_suffix === 'plugins.php' && !isset($_POST['submit']) ) {
-				$options = get_option( 'plugin_sosere' );
-				if ( isset( $options['activated']) && $options['activated'] === true ){
+				if ( isset( $this->options['activated']) && $this->options['activated'] === true ){
 					$activation_msg = '<div class="updated">';
 					$activation_msg .= '<p>';
 					$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
