@@ -108,7 +108,7 @@
 		public function page_init()
 		{
 			$this->options = get_option( 'plugin_sosere' );
-			if ( false == $this->options || 0 <= count( $this->options ) ) {
+			if ( false == $this->options ) {
 				// preset options
 				$sosere_default_options = array(
 					"use_cache" 				=> "on",
