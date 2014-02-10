@@ -107,6 +107,21 @@
 		 */
 		public function page_init()
 		{
+			$this->options = get_option( 'plugin_sosere' );
+			if ( false == $this->options || 0 <= count( $this->options ) ) {
+				// preset options
+				$sosere_default_options = array(
+					"use_cache" 				=> "on",
+					"max_cache_time" 			=> "24",
+					"recommedation_box_title"   => __( "Recommended for you", 'sosere-rec' ),
+					"result_count" 				=> "3",
+					"max_post_age" 				=> "0",
+					"max_view_history" 			=> "30"
+				);
+				$this->options = $sosere_default_options;
+				update_option ( 'plugin_sosere', $this->options );
+			}
+			
 			register_setting(
 				'sosere_option_group', // Option group
 				'plugin_sosere' // Option name
@@ -401,27 +416,8 @@
 		*/
 		public function sosere_setup_on_activation() {
 			if ( current_user_can( 'activate_plugins' ) ) {
-				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-				check_admin_referer( "activate-plugin_{$plugin}" );
-				
-				$this->options = get_option( 'plugin_sosere' );
-				if ( false == $this->options || 0 <= count( $this->options ) ) {
-				// preset options
-					$sosere_default_options = array(
-						"use_cache" 				=> "on",
-						"max_cache_time" 			=> "24",
-						"recommedation_box_title"   => __( "Recommended for you", 'sosere-rec' ),
-						"result_count" 				=> "3",
-						"max_post_age" 				=> "0",
-						"max_view_history" 			=> "30"
-					);
-					$this->options = $sosere_default_options;
-					update_option ( 'plugin_sosere', $this->options );
-					
-				} 
 				// activation flag 
 				update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
-			} else {
 				return;
 			}
 		}

@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
- * Description: Recommendation of related/interesting post on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and fits perfect to each post individually.
+ * Description: Recommendation of related / interesting posts on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and fits perfect to each post individually.
  * Version: 1.4.5
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
- * License: GPL2
+ * License: GPLv2
  * Text Domain: sosere-rec
  * Domain Path: /languages/
  */
