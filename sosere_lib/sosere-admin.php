@@ -466,7 +466,7 @@
 		* @since 1.4.4
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
-		public function sosere_msg_on_update( $value, $hook_extra, $result ) {
+		public function sosere_msg_on_update( $value=null, $hook_extra=null, $result=null ) {
 		
 			$activation_msg = '<div class="updated">';
 			$activation_msg .= '<p>';
@@ -475,7 +475,13 @@
 			$activation_msg .= '</div><!-- /.updated -->';
 			echo $activation_msg;
 			
-			return $result;
+			if ( $result ) { 
+				return $result; 
+			} else if( $value ) {
+				return $value;
+			} else {
+				return;
+			}
 		}
 		
 		public function sosere_extend_description( $links, $file=null ) {
