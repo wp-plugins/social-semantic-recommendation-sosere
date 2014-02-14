@@ -3,7 +3,7 @@
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
  * Description: Recommendation of related / interesting posts on your blog. Based on socialsemantic network analysis for recommendations. It is self-learning and fits perfect to each post individually.
- * Version: 1.4.5
+ * Version: 1.4.6
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPLv2

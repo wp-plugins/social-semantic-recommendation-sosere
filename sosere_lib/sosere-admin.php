@@ -38,6 +38,9 @@
 			register_activation_hook( __FILE__, array( $this, 'sosere_setup_on_activation' ) );
 			add_action( 'activated_plugin', array( $this, 'sosere_activated' ) );
 			add_action( 'admin_notices', array( $this, 'sosere_msg_on_reactivation') );
+			// hook update procedure
+			add_filter( 'upgrader_post_install', array( $this, 'sosere_msg_on_update' ) );
+			
 			
 			// extended description
 			add_filter( 'plugin_row_meta', array( $this, 'sosere_extend_description' ), 10, 2 );
@@ -326,7 +329,7 @@
 				printf( '<img id="default_thumb_button" src="%s"></img>',
 					SOSERE_PLUGIN_DIR.'sosere_img/admin-icon-edit.png'
 				);
-				print( '<span class="admininfo"> ' . __( 'Choose a default thumbnail image. It will be shown, if you use thumbnails for recommendations and a recommeded article has no thumbnail.', 'sosere-rec' ) . '</span>' );		
+				print( '<span class="admininfo"> ' . __( 'Choose a default thumbnail image. It will be shown, if you use thumbnails for recommendations and a recommended article has no thumbnail.', 'sosere-rec' ) . '</span>' );		
 			} else {
 				print( '<span class="admininfo"> ' . __( 'This option requires Wordpress 3.5 or newer. Update Wordpress, if you want to use it.', 'sosere-rec' ) . '</span>' );
 			}
@@ -349,7 +352,7 @@
 				'<input type="checkbox" id="hide_output" name="plugin_sosere[hide_output]" %s />',
 				$checkbox_hide_output
 			);
-			print( '<span class="admininfo">' . __( 'SOSERE uses also user behaviour data for recommendations. It takes up to 8 weeks to collect enough data for an usable network. You can activate the plugin, let it learn, and hide the output. Usefull also for A/B testing.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'SOSERE uses also user behaviour data for recommendations. It takes up to 8 weeks to collect enough data for an usable network. You can activate the plugin, let it learn, and hide the output. Useful also for A/B testing.', 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_include_pages_callback()
@@ -371,7 +374,7 @@
 				'<input type="text" id="recommedation_box_title" name="plugin_sosere[recommedation_box_title]" value="%s" />',
 				isset( $this->options['recommedation_box_title'] ) ? esc_attr( $this->options['recommedation_box_title'] ) : ''
 			);
-			print( '<span class="admininfo">' . __( 'Type in a recommendation box title like "Recommendet for you:" or "You could also be interested in:"', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'Type in a recommendation box title like "Recommended for you:" or "You could also be interested in:"', 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_resultcount_callback() {
@@ -406,7 +409,7 @@
 				'<input type="text" id="max_view_history" name="plugin_sosere[max_view_history]" value="%s" />',
 				isset( $this->options['max_view_history'] ) ? esc_attr( $this->options['max_view_history'] ) : ''
 			);
-			print( '<span class="admininfo">' . __( 'User behavior is used for recommendations. How old may considered user actions be? Default is 30 days.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'User behaviour is used for recommendations. How old may considered user actions be? Default is 30 days.', 'sosere-rec' ) . '</span>' );
 		}
 
 		/*
@@ -428,8 +431,10 @@
 		* @since 1.4.4
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
-		public function sosere_activated() {
-			update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
+		public function sosere_activated( $file ) {
+			if ( current_user_can( 'activate_plugins' ) && $file == substr( SOSERE_PLUGIN_BASENAME, -mb_strlen( $file ) ) ) {
+				update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
+			}
 			return;
 			
 		}
@@ -443,7 +448,7 @@
 			
 			if ( $hook_suffix === 'plugins.php' && !isset($_POST['submit']) ) {
 				$activated = get_option( 'plugin_sosere_activated' );
-				if ( isset( $activated['plugin_sosere_activated']) && $activated['plugin_sosere_activated'] === true ){
+				if ( isset( $activated['plugin_sosere_activated'] ) && $activated['plugin_sosere_activated'] === true ){
 					$activation_msg = '<div class="updated">';
 					$activation_msg .= '<p>';
 					$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
@@ -456,8 +461,25 @@
 			return;
 		}
 		
+		/*
+		* update message
+		* @since 1.4.4
+		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		public function sosere_msg_on_update( $value, $hook_extra, $result ) {
+		
+			$activation_msg = '<div class="updated">';
+			$activation_msg .= '<p>';
+			$activation_msg .= __( 'Thank you for updating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
+			$activation_msg .= '</p>';
+			$activation_msg .= '</div><!-- /.updated -->';
+			echo $activation_msg;
+			
+			return $result;
+		}
+		
 		public function sosere_extend_description( $links, $file=null ) {
-			if ( $file == substr( SOSERE_PLUGIN_BASENAME, -mb_strlen($file) ) ) {
+			if ( $file == substr( SOSERE_PLUGIN_BASENAME, -mb_strlen( $file ) ) ) {
 	           $links[] = '<a href="options-general.php?page=sosere-settings">' . __('Settings', 'sosere-rec' ) . '</a>';
 	           $links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">' . __('Donate', 'sosere-rec') . '</a>';
 	        }
