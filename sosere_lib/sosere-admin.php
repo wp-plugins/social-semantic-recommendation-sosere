@@ -352,7 +352,7 @@
 				'<input type="checkbox" id="hide_output" name="plugin_sosere[hide_output]" %s />',
 				$checkbox_hide_output
 			);
-			print( '<span class="admininfo">' . __( 'SOSERE uses also user behaviour data for recommendations. It takes up to 8 weeks to collect enough data for an usable network. You can activate the plugin, let it learn, and hide the output. Useful also for A/B testing.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'SOSERE uses categories, tags but also user behaviour data for recommendations. It takes up to 6 weeks to collect enough data for an usable network. You can activate the plugin, let it learn, and hide the output. Useful also for A/B testing.', 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_include_pages_callback()
