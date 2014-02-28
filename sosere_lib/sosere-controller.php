@@ -50,6 +50,8 @@
 	 
 	 private $show_thumbs_title = false;
 	 
+	 private $title_leng = 50;
+	 
 	 private $show_thumbs = false;
 	 
 	 private $default_thumbnail_img_url = null;
@@ -347,12 +349,12 @@
 							
 							// add title
 							if ( true === $this->show_thumbs_title ) {
-								$return_string .= '<p>'.$post_obj->post_title.'</p>';
+								$return_string .= '<p>'.substr( $post_obj->post_title, 0, $this->title_leng ).'</p>';
 							} 
 							// close link, list
 							$return_string .= '</a></li>';
 						} else {
-							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'.$post_obj->post_title.'</a></li>';
+							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'. $post_obj->post_title .'</a></li>';
 						}
 					}
 				}
