@@ -7,18 +7,24 @@ Plugin URI: http://www.sosere.com
 Tags: related posts, related content, pages, posts, related, sosere, multisite, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 1.4.7
+Stable tag: 1.5
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
 
 == Description ==
 
-Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It increases your SEO performance, 
-helps to engage readers and show them what else is worth their reading time. Intelligent, customizable, efficient and easy to use.  No need to add any PHP tags. 
-It works out of the box. Activate and enjoy.  
+Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your readers and show them other exciting content from your website. It displays links or thumbnails to
+ related pages, posts, and custom post types at the bottom of an entry. Improve your search engine listing and keep and show readers what else is worth their reading time. 
+ SOSERE is intelligent, customizable, efficient and easy to use. It works out of the box. No need to add any PHP tags. Simply activate and enjoy.  
 
 **SOSERE Features**
+<br />
+**An unique social-semantic network analysis bases algorithm** 
+-----------------------------------------
+*  Using an unique algorithm considering categories, custom taxonomies and tags 
+*  Considering contextual user behaviour 
+*  Respects users privacy 
 <br />
 **Customizable view** 
 -----------------------------------------
@@ -31,11 +37,7 @@ It works out of the box. Activate and enjoy.
 **Support of related posts, pages, and custom post types**
 -----------------------------------------
 *  Customizable recommended entry types
-<br />
-**An unique social-semantic network analysis bases algorithm** 
------------------------------------------
-*  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
-*  Respects users privacy
+*  Limit related entries by age
 <br />
 **Custom Caching**
 -----------------------------------------
@@ -112,32 +114,36 @@ Yes.
 
 == Changelog ==
 
-= 1.3.2 =
-* Performance optimisations 
-* Minor changes in readme.txt
+= 1.5 =
+* minor changes
+* limited title length under thumbs
 
-= 1.4 =
-* Add usage of first post image if thumbnail view and no featured image selected
-
-= 1.4.1 =
-* minor fix
-
-= 1.4.2 =
-* minor fix (thumbs view)
-
-= 1.4.3 =
-* improve pre-setting options and minor fixes
-
-= 1.4.4 =
-* minor fix
-
-= 1.4.5 =
-* added update messages and rewrote main plugin file
+= 1.4.7 =
+* minor changes
+* de_DE translation fix
 
 = 1.4.6 =
 * fix some typo
 * fix activation message trigger 
 
-= 1.4.7 =
-* minor changes
-* de_DE translation fix
+= 1.3.2 =
+* Performance optimisations 
+* Minor changes in readme.txt
+
+= 1.4.5 =
+* added update messages and rewrote main plugin file
+
+= 1.4.4 =
+* minor fix
+
+= 1.4.3 =
+* improve pre-setting options and minor fixes
+
+= 1.4.2 =
+* minor fix (thumbs view)
+
+= 1.4.1 =
+* minor fix
+
+= 1.4 =
+* Add usage of first post image if thumbnail view and no featured image selected
