@@ -467,7 +467,7 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_msg_on_update( $value=null, $hook_extra=null, $result=null ) {
-			if( $_GET['plugin'] == 'social-semantic-recommendation-sosere' ) {
+			if( $_GET["plugin"] == 'social-semantic-recommendation-sosere' ) {
 				$activation_msg = '<div class="updated">';
 				$activation_msg .= '<p>';
 				$activation_msg .= __( 'Thank you for updating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );

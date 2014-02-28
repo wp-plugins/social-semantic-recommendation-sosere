@@ -126,10 +126,6 @@ Yes.
 * fix some typo
 * fix activation message trigger 
 
-= 1.3.2 =
-* Performance optimisations 
-* Minor changes in readme.txt
-
 = 1.4.5 =
 * added update messages and rewrote main plugin file
 
@@ -147,3 +143,7 @@ Yes.
 
 = 1.4 =
 * Add usage of first post image if thumbnail view and no featured image selected
+
+= 1.3.2 =
+* Performance optimizations 
+* Minor changes in readme.txt
