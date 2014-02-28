@@ -15,7 +15,7 @@ Display a list of related entries on your site based on an unique, self-learning
 == Description ==
 
 Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your readers and show them other exciting content from your website. It displays links or thumbnails to
- related pages, posts, and custom post types at the bottom of an entry. Improve your search engine listing and keep and show readers what else is worth their reading time. 
+ related pages, posts, and custom post types at the bottom of an entry. Improve your search engine listing and show readers what else is worth their reading time. 
  SOSERE is intelligent, customizable, efficient and easy to use. It works out of the box. No need to add any PHP tags. Simply activate and enjoy.  
 
 **SOSERE Features**
