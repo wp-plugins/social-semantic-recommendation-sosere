@@ -39,6 +39,8 @@
 			add_action( 'activated_plugin', array( $this, 'sosere_activated' ) );
 			add_action( 'admin_notices', array( $this, 'sosere_msg_on_reactivation') );
 			// hook update procedure
+			add_filter( 'upgrader_pre_install', array( $this, 'sosere_secure_custom_css_on_update' ) );
+			add_filter( 'upgrader_post_install', array( $this, 'sosere_restore_custom_css_on_update' ) );
 			add_filter( 'upgrader_post_install', array( $this, 'sosere_msg_on_update' ) );
 			
 			
@@ -51,7 +53,7 @@
 		/*
 		* add custom css & js for settings page
 		*/
-		function admin_include_register() 
+		function admin_include_register()
 		{	
 			// style
 			wp_register_style( 'sosere-recommendation-admin-style',  SOSERE_PLUGIN_DIR.'sosere_css/sosere-recommendation-admin.css' );
@@ -92,7 +94,8 @@
 			
 			?>
 			<div class="wrap">
-				<h2>SOSERE</h2>           
+				<h2>SOSERE</h2>     
+				<p> 
 				<form method="post" action="options.php">
 				<?php
 					// This prints out all hidden setting fields
@@ -225,7 +228,7 @@
 				'sosere-settings' // Page
 			); 
 			
-			 add_settings_field(
+			add_settings_field(
 				'sosere_maxpostage', 
 				__( 'Consider posts/pages not older than (days)', 'sosere-rec' ), 
 				array( $this, 'sosere_maxpostage_callback' ), 
@@ -275,7 +278,7 @@
 				'<input type="checkbox" id="use_cache" name="plugin_sosere[use_cache]" %s />',
 				$checkbox_use_cache
 			);
-			print( '<span class="admininfo">' . __( 'Caching increase your blog performance. It has no effect on other caching plugins but leave it unchecked, if you are using another caching plugin.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( "Caching increases your blog performance by storing output in database for a period of time, while SSOSERE doesn't have to generate it each time. It has no effect on other caching plugins but leave it unchecked if you are using another caching plugin.", 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_max_cache_time_callback()
@@ -304,8 +307,8 @@
 			$optionsstring .='value="2"> ' . __( 'Thumbnail only', 'sosere-rec' ) . ' </option>';
 			printf(
 				'<select name="plugin_sosere[show_thumbs]" onchange=\'document.getElementById("admin-viewstyle-img").src="'
-				.$img_baseurl
-				.'admin-viewstyle" + this.options[this.selectedIndex].value + ".png";\'>'.$optionsstring.'</select>'	
+				. $img_baseurl
+				. 'admin-viewstyle" + this.options[this.selectedIndex].value + ".png";\'>' . $optionsstring . '</select>'	
 			);
 			
 			if ( isset( $this->options['show_thumbs'] ) ) $option_number = $this->options['show_thumbs'];
@@ -329,9 +332,9 @@
 				printf( '<img id="default_thumb_button" src="%s"></img>',
 					SOSERE_PLUGIN_DIR.'sosere_img/admin-icon-edit.png'
 				);
-				print( '<span class="admininfo"> ' . __( 'Choose a default thumbnail image. It will be shown, if you use thumbnails for recommendations and a recommended article has no thumbnail.', 'sosere-rec' ) . '</span>' );		
+				print( '<span class="admininfo"> ' . __( 'Choose a default thumbnail image. It will be shown if you use thumbnails for recommendations and a recommended article has no thumbnail.', 'sosere-rec' ) . '</span>' );		
 			} else {
-				print( '<span class="admininfo"> ' . __( 'This option requires Wordpress 3.5 or newer. Update Wordpress, if you want to use it.', 'sosere-rec' ) . '</span>' );
+				print( '<span class="admininfo"> ' . __( 'This option requires Wordpress 3.5 or newer. Update Wordpress if you want to use it.', 'sosere-rec' ) . '</span>' );
 			}
 		}
 		
@@ -352,7 +355,7 @@
 				'<input type="checkbox" id="hide_output" name="plugin_sosere[hide_output]" %s />',
 				$checkbox_hide_output
 			);
-			print( '<span class="admininfo">' . __( 'SOSERE uses categories, tags but also user behaviour data for recommendations. It takes up to 6 weeks to collect enough data for an usable network. You can activate the plugin, let it learn, and hide the output. Useful also for A/B testing.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'SOSERE uses categories, tags and user behaviour data for recommendations. It takes up to 6 weeks to collect enough data for a usable network. You can activate the plugin, let it learn and hide the output. Useful also for A/B testing.', 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_include_pages_callback()
@@ -362,7 +365,7 @@
 				'<input type="checkbox" id="include_pages" name="plugin_sosere[include_pages]" %s />',
 				$checkbox_include_pages
 			);
-			print( '<span class="admininfo">' . __( 'By default SOSERE shows recommendations on posts but not on (custom) pages. Check this box, if you like to show recommendations on pages and custom page types too.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'By default SOSERE shows recommendations on posts but not on (custom) pages. Check this box if you like to show recommendations on pages and custom page types too.', 'sosere-rec' ) . '</span>' );
 		}
 
 		/** 
@@ -374,7 +377,7 @@
 				'<input type="text" id="recommedation_box_title" name="plugin_sosere[recommedation_box_title]" value="%s" />',
 				isset( $this->options['recommedation_box_title'] ) ? esc_attr( $this->options['recommedation_box_title'] ) : ''
 			);
-			print( '<span class="admininfo">' . __( 'Type in a recommendation box title like "Recommended for you:" or "You could also be interested in:"', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'Type in a recommendation box title like "Recommended for you:" or "You could also be interested in:".', 'sosere-rec' ) . '</span>' );
 		}
 		
 		public function sosere_resultcount_callback() {
@@ -387,7 +390,7 @@
 				$optionsstring .= '>'.$i.'</option>';
 			}
 			printf(
-				'<select name="plugin_sosere[result_count]" size="1">'.$optionsstring.'</select>'
+				'<select name="plugin_sosere[result_count]" size="1">' . $optionsstring . '</select>'
 			);
 			print( '<span class="admininfo">' . __( 'Choose the maximum count of recommended posts.', 'sosere-rec' ) . '</span>' );
 
@@ -409,7 +412,7 @@
 				'<input type="text" id="max_view_history" name="plugin_sosere[max_view_history]" value="%s" />',
 				isset( $this->options['max_view_history'] ) ? esc_attr( $this->options['max_view_history'] ) : ''
 			);
-			print( '<span class="admininfo">' . __( 'User behaviour is used for recommendations. How old may considered user actions be? Default is 30 days.', 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( 'User behaviour is the basis of recommendations. How old may considered user actions be? Default is 30 days.', 'sosere-rec' ) . '</span>' );
 		}
 
 		/*
@@ -462,26 +465,50 @@
 		}
 		
 		/*
+		* secure custom css file before update
+		* @since 1.6
+		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		public function sosere_secure_custom_css_on_update() {
+			$dest = realpath(SOSERE_PLUGIN_ROOT_DIR.'../');    
+			if ( file_exists( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' ) ) {
+				copy( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css', $dest.'/sosere-recommendation-custom.css' );
+			}
+		}
+		
+		/*
+		* restore custom css file after update
+		* @since 1.6
+		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		public function sosere_restore_custom_css_on_update() {
+			$src = realpath( SOSERE_PLUGIN_ROOT_DIR .'../' );  
+			if ( file_exists( $src.'/sosere-recommendation-custom.css' ) ) {
+				copy( $src.'/sosere-recommendation-custom.css', SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' );
+			}
+		}
+		
+		/*
 		* update message
 		* @since 1.4.4
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_msg_on_update( $value=null, $hook_extra=null, $result=null ) {
-			if( false !== stripos( $_GET["plugin"],'social-semantic-recommendation-sosere' ) ) {
+			if( isset( $_GET["plugin"] ) && false !== stripos( $_GET["plugin"], 'social-semantic-recommendation-sosere' ) ) {
 				$activation_msg = '<div class="updated">';
 				$activation_msg .= '<p>';
 				$activation_msg .= __( 'Thank you for updating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.','sosere-rec' );
 				$activation_msg .= '</p>';
 				$activation_msg .= '</div><!-- /.updated -->';
+				update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
 				echo $activation_msg;
-				
-				if ( $result ) { 
-					return $result; 
-				} else if( $value ) {
-					return $value;
-				} else {
-					return;
-				}
+			} 
+			if ( $result ) { 
+				return $result; 
+			} else if( $value ) {
+				return $value;
+			} else if( $hook_extra ) {
+				return $hook_extra;
 			} else {
 				return;
 			}

@@ -15,33 +15,34 @@ Display a list of related entries on your site based on an unique, self-learning
 == Description ==
 
 Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your readers and show them other exciting content from your website. It displays links or thumbnails to
- related pages, posts, and custom post types at the bottom of an entry. Improve your search engine listing and show readers what else is worth their reading time. 
+ related pages, posts and custom post types at the bottom of an entry. Improve your search engine listing and show readers what else is worth their reading time. 
  SOSERE is intelligent, customizable, efficient and easy to use. It works out of the box. No need to add any PHP tags. Simply activate and enjoy.  
 
 **SOSERE Features**
 <br />
-**An unique social-semantic network analysis bases algorithm** 
+**A unique social-semantic network analysis based algorithm** 
 -----------------------------------------
-*  Using an unique algorithm considering categories, custom taxonomies and tags 
+*  Using a unique algorithm considering categories, custom taxonomies and tags 
 *  Considering contextual user behaviour 
 *  Respects users privacy 
 <br />
 **Customizable view** 
 -----------------------------------------
-*  Automatic linking of related content at the bottom of each post/page.
+*  Automated linking of related content at the bottom of each post/page
 *  Thumbnails, thumbnails with post titles or list view
-*  Post featured image, first post image or default plugin image as thumbnail
+*  Post a featured image, first post image or default plugin image as thumbnail
 *  Customizable css style
 *  Customizable recommendation box title
 <br />
-**Support of related posts, pages, and custom post types**
+**Support of related posts, pages and custom post types**
 -----------------------------------------
 *  Customizable recommended entry types
 *  Limit related entries by age
 <br />
 **Custom Caching**
 -----------------------------------------
-*  SOSERE is efficient, caching related posts data as your site is visited.
+*  SOSERE is efficient, caching related posts data as your site is visited
+
 <br />
 **Multilanguage support**
 -----------------------------------------
@@ -50,7 +51,6 @@ Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your rea
 * German: Deutsch
 <br />
 <br />
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.2 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
 <br />
@@ -113,6 +113,11 @@ You can also use it to compare e.g. performance and page impressions (A/B testin
 Yes. 
 
 == Changelog ==
+
+= 1.6 =
+* minor fixes
+* performance optimization in data handling
+* readme typo
 
 = 1.5 =
 * minor changes

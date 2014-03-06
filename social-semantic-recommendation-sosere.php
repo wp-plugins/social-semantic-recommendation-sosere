@@ -3,11 +3,11 @@
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
  * Description: SOSERE displays a list or thumbnails of related entries at the bottom of a post based on an unique, self-learning, socialsemantic network analysis algorithm. It is efficient and fits perfect to each post individually.
- * Version: 1.5
+ * Version: 1.6
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
- * License: GPLv2
- * Text Domain: sosere-rec
+ * License: GPLv2  
+ * Text Domain: sosere-rec 
  * Domain Path: /languages/
  */
  
