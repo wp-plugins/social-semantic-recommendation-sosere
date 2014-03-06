@@ -94,8 +94,7 @@
 			
 			?>
 			<div class="wrap">
-				<h2>SOSERE</h2>     
-				<p> 
+				<h2>SOSERE</h2> 
 				<form method="post" action="options.php">
 				<?php
 					// This prints out all hidden setting fields
