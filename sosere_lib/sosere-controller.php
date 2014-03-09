@@ -50,6 +50,8 @@
 	 
 	 private $show_thumbs_title = false;
 	 
+	 private $title_leng = 50;
+	 
 	 private $show_thumbs = false;
 	 
 	 private $default_thumbnail_img_url = null;
@@ -152,7 +154,7 @@
 						if( false === $this->hide_output ) {
 							return $content . $cached[0];
 						} else {
-							return '';
+							return $content;
 						}
 					}
 				}
@@ -256,24 +258,22 @@
 			if ( isset( $_SESSION['sosereviewedposts'] ) && is_array( $_SESSION['sosereviewedposts'] )) {
 				$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
 			}
-					$network_data = get_post_meta( $this->post->ID, 'soseredbviewedposts' );
-					if ( is_array( $network_data ) && 0 < count( $network_data ) ) {
-						$network_data = explode( ',', $network_data[0] );
-						foreach( $network_data as $key => $val ) {
-							$network_data_set = explode( ':', $val );
-							if ( $network_data_set[0] != $this->post->ID ){
-								$network_time_stamp = $network_data_set[1];
-								if ( 0 < $network_time_stamp ) {
-									$diff = ( $this->now - $network_time_stamp ) / ( 60*60*24 );
+					$network_data = unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
+					if ( false !== $network_data ) {
+						foreach( $network_data as $key => $network_data_set ) {
+							if ( $network_data_set['id'] != $this->post->ID ){
+								if ( 0 < $network_data_set['timestamp'] ) {
+									$diff = ( $this->now - $network_data_set['timestamp'] ) / ( 60*60*24 );
 									if ( $diff <= $this->max_view_history || ( 0 === $this->max_view_history ) ) {
-										$new_network_data[] = $network_data_set[0] . ':' . $network_data_set[1]; 
+										$new_network_data[] = array( 'id'=>$network_data_set['id'], 'timestamp'=>$network_data_set['timestamp'] ); 
 										// add to selection
-										$this->user_selection[] = (int) $network_data_set[0];
+										$this->user_selection[] = (int) $network_data_set['id'];
 									}
 								}
 							}
 						}
 					}
+
 					if ((is_single() || is_page()) && false === $this->prefetch_request ) {
 						// add new post to network but prevent self relations and reload entries
 					   if ( isset( $this->viewed_post_IDs ) && is_array( $this->viewed_post_IDs ) ) {
@@ -282,15 +282,15 @@
 								// add to network
 								foreach ( $this->viewed_post_IDs as $sp_id ) {
 									if ( (int)$this->post->ID !== (int)$sp_id ) {
-										$new_network_data[] = $sp_id . ':' . $this->now;
+										$new_network_data[] = array( 'id'=>$sp_id, 'timestamp'=>$this->now );
 									}
 								}
 							} 
 						// safe to db
 						if ( isset( $new_network_data ) && is_array( $new_network_data ) ) {
-							$new_network_data_DB = implode( ',', $new_network_data );
+							$new_network_data_DB = serialize( $new_network_data );
 							}
-
+							
 						if ( isset( $new_network_data_DB ) ) {
 							add_post_meta( $this->post->ID, 'soseredbviewedposts', $new_network_data_DB, true ) or
 							update_post_meta( $this->post->ID, 'soseredbviewedposts', $new_network_data_DB );
@@ -347,12 +347,16 @@
 							
 							// add title
 							if ( true === $this->show_thumbs_title ) {
-								$return_string .= '<p>'.$post_obj->post_title.'</p>';
+								if ( 0 < $this->title_leng && mb_strlen( $post_obj->post_title ) > $this->title_leng ) { 
+									$return_string .= '<p>' . substr( $post_obj->post_title, 0, $this->title_leng ) . '...</p>';
+								} else {
+									$return_string .= '<p>' . $post_obj->post_title . '</p>';
+								}
 							} 
 							// close link, list
 							$return_string .= '</a></li>';
 						} else {
-							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'.$post_obj->post_title.'</a></li>';
+							$return_string .= '<li><a href="'.get_permalink( $post_obj->ID).'">'. $post_obj->post_title .'</a></li>';
 						}
 					}
 				}
