@@ -421,8 +421,13 @@
 		*/
 		public function sosere_setup_on_activation() {
 			if ( current_user_can( 'activate_plugins' ) ) {
+				
+				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+				check_admin_referer( "activate-plugin_{$plugin}" );
 				// activation flag 
 				update_option ( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
+				return;
+			} else {
 				return;
 			}
 		}
@@ -469,9 +474,11 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_secure_custom_css_on_update() {
-			$dest = realpath(SOSERE_PLUGIN_ROOT_DIR.'../');    
-			if ( file_exists( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' ) ) {
-				copy( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css', $dest.'/sosere-recommendation-custom.css' );
+			if( isset( $_REQUEST["plugin"] ) && 0 === stripos( $_REQUEST["plugin"], 'social-semantic-recommendation-sosere' ) && $_REQUEST["action"] == 'upgrade-plugin' ) {
+				$dest = realpath(SOSERE_PLUGIN_ROOT_DIR.'../');    
+				if ( file_exists( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' ) ) {
+					copy( SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css', $dest.'/sosere-recommendation-custom.css' );
+				}
 			}
 		}
 		
@@ -481,9 +488,11 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		public function sosere_restore_custom_css_on_update() {
-			$src = realpath( SOSERE_PLUGIN_ROOT_DIR .'../' );  
-			if ( file_exists( $src.'/sosere-recommendation-custom.css' ) ) {
-				copy( $src.'/sosere-recommendation-custom.css', SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' );
+			if( isset( $_REQUEST["plugin"] ) && 0 === stripos( $_REQUEST["plugin"], 'social-semantic-recommendation-sosere' ) && $_REQUEST["action"] == 'upgrade-plugin' ) {
+				$src = realpath( SOSERE_PLUGIN_ROOT_DIR .'../' );  
+				if ( file_exists( $src.'/sosere-recommendation-custom.css' ) ) {
+					copy( $src.'/sosere-recommendation-custom.css', SOSERE_PLUGIN_ROOT_DIR.'sosere_css/sosere-recommendation-custom.css' );
+				}
 			}
 		}
 		

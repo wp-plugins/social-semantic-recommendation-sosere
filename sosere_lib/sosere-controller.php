@@ -261,7 +261,7 @@
 					$network_data = unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
 					if ( false !== $network_data ) {
 						foreach( $network_data as $key => $network_data_set ) {
-							if ( $network_data_set['id'] != $this->post->ID && false === in_array( $network_data_set['id'], $this->exclude_posts) ){
+							if ( $network_data_set['id'] != $this->post->ID ){
 								if ( 0 < $network_data_set['timestamp'] ) {
 									$diff = ( $this->now - $network_data_set['timestamp'] ) / ( 60*60*24 );
 									if ( $diff <= $this->max_view_history || ( 0 === $this->max_view_history ) ) {
@@ -281,7 +281,7 @@
 							if ( $this->post->ID != end( $this->viewed_post_IDs ) ){
 								// add to network
 								foreach ( $this->viewed_post_IDs as $sp_id ) {
-									if ( (int)$this->post->ID !== (int)$sp_id && false === in_array( (int)$sp_id, $this->exclude_posts) ) {
+									if ( (int)$this->post->ID !== (int)$sp_id ) {
 										$new_network_data[] = array( 'id'=>$sp_id, 'timestamp'=>$this->now );
 									}
 								}
