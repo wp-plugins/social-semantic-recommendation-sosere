@@ -431,7 +431,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 					$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.', 'sosere-rec' );
 					$activation_msg .= '</p>';
 					$activation_msg .= '</div><!-- /.updated -->';
-					echo esc_attr( $activation_msg );
+					echo $activation_msg;
 					delete_option( 'plugin_sosere_activated' );
 				}
 			}
@@ -482,7 +482,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				$activation_msg .= '</p>';
 				$activation_msg .= '</div><!-- /.updated -->';
 				update_option( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
-				echo esc_attr( $activation_msg );
+				echo $activation_msg;
 			}
 			if ( $result ) { 
 				return $result;

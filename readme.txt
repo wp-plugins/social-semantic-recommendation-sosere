@@ -113,6 +113,10 @@ You can also use it to compare e.g. performance and page impressions (A/B testin
 Yes. 
 
 == Changelog ==
+
+= 1.7.1 =
+* minor fix
+
 = 1.7 =
 * new configuration feature: set custom thumbnail size
 * minor fixes & codig style
