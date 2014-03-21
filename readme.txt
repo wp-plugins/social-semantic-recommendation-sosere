@@ -4,51 +4,55 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
-Tags: pages, posts, related, sosere, multisite, multilingual, thumbnails, related posts, related content, social, semantic, recommendations
+Tags: related posts, related content, pages, posts, related, sosere, multisite, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
 Tested up to: 3.8.1
-Stable tag: 1.4.3
+Stable tag: 1.8
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
 
 == Description ==
 
-Social Semantic Recommendation (SOSERE) displays pages, posts, and custom post types related to the current entry. It increases your SEO performance, 
-helps to engage readers and show them what else is worth their reading time. Intelligent, customizable, efficient and easy to use.  No need to add any PHP tags. 
-It works out-of-the-box. Activate and enjoy.  
+Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your readers and show them other exciting content from your website. It displays links or thumbnails to
+ related pages, posts and custom post types at the bottom of an entry. Improve your search engine listing and show readers what else is worth their reading time. 
+ SOSERE is intelligent, customizable, efficient and easy to use. It works out of the box. No need to add any PHP tags. Simply activate and enjoy.  
 
-**SOSERE Community Edition Features**
+**SOSERE Features**
+<br />
+**A unique social-semantic network analysis based algorithm** 
+-----------------------------------------
+*  Using a unique algorithm considering categories, custom taxonomies and tags 
+*  Considering contextual user behaviour 
+*  Respects users privacy 
 <br />
 **Customizable view** 
 -----------------------------------------
-*  Automatic linking of related content at the bottom of each post/page.
+*  Automated linking of related content at the bottom of each post/page
 *  Thumbnails, thumbnails with post titles or list view
-*  Post featured image, first post image or default plugin image as thumbnail
+*  Post a featured image, first post image or default plugin image as thumbnail
 *  Customizable css style
 *  Customizable recommendation box title
 <br />
-**Support of related posts, pages, and custom post types**
+**Support of related posts, pages and custom post types**
 -----------------------------------------
 *  Customizable recommended entry types
-<br />
-**An unique social-semantic network analysis bases algorithm** 
------------------------------------------
-*  Using an unique algorithm considering post titles, tags, categories, custom taxonomies and user behaviour.
-*  Respects users privacy
+*  Limit related entries by age
 <br />
 **Custom Caching**
 -----------------------------------------
-*  SOSERE is efficient, caching related posts data as your site is visited.
+*  SOSERE is efficient, caching related posts data as your site is visited
+
 <br />
 **Multilanguage support**
 -----------------------------------------
 
-* English - default, always included
-* German: Deutsch
+* English: default
+* German
+* Spanish
+
 <br />
 <br />
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.2 or greater. 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
 <br />
@@ -72,9 +76,9 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 
 == Frequently Asked Questions ==
 
-**Common Questions about SOSERE Community Edition**
+**Common Questions about SOSERE**
 
-Below are Frequently Asked Questions about SOSERE Community Edition. 
+Below are Frequently Asked Questions about SOSERE. 
 
 If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/social-semantic-recommendation-sosere/). 
 
@@ -112,18 +116,55 @@ Yes.
 
 == Changelog ==
 
-= 1.3.2 =
-* Performance optimisations 
-* Minor changes in readme.txt
+= 1.8 =
+* add configuration sanitizing
+* add Spanish translation
 
-= 1.4 =
-* Add usage of first post image if thumbnail view and no featured image selected
-
-= 1.4.1 =
+= 1.7.1 =
 * minor fix
+
+= 1.7 =
+* new configuration feature: set custom thumbnail size
+* minor fixes & codig style
+
+= 1.6.1 =
+* minor fix
+
+= 1.6 =
+* minor fixes
+* performance optimization in data handling
+* readme typo
+
+= 1.5 =
+* minor changes
+* limited title length under thumbs
+
+= 1.4.7 =
+* minor changes
+* de_DE translation fix
+
+= 1.4.6 =
+* fix some typo
+* fix activation message trigger 
+
+= 1.4.5 =
+* added update messages and rewrote main plugin file
+
+= 1.4.4 =
+* minor fix
+
+= 1.4.3 =
+* improve pre-setting options and minor fixes
 
 = 1.4.2 =
 * minor fix (thumbs view)
 
-= 1.4.3 =
-* improve pre-setting options and minor fixes
+= 1.4.1 =
+* minor fix
+
+= 1.4 =
+* Add usage of first post image if thumbnail view and no featured image selected
+
+= 1.3.2 =
+* Performance optimizations 
+* Minor changes in readme.txt
