@@ -2,15 +2,16 @@
 /**
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
- * Description: SOSERE displays a list or thumbnails of related entries at the bottom of a post based on an unique, self-learning, socialsemantic network analysis algorithm. It is efficient and fits perfect to each post individually.
- * Version: 1.7.1
+ * Description: SOSERE displays a list or thumbnails of related entries at the bottom of a post based on an unique, self-learning, socialsemantic analysis algorithm. It is efficient and fits perfect to each post individually.
+ * Version: 1.8
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPLv2
  * Text Domain: sosere-rec
- * Domain Path: /languages/
+ * Domain Path: /sosere_languages/
  */
 
+ 
  /*  Copyright 2014  Arthur Kaiser (email: social-semantic-recommendation@sosere.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -26,6 +27,11 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+/*
+* Description reference for translations
+*/
+$dump = __( 'SOSERE displays a list or thumbnails of related entries at the bottom of a post based on an unique, self-learning, socialsemantic analysis algorithm. It is efficient and fits perfect to each post individually.', 'sosere-rec' );
 
 /**
  * Avoid direct calls to this file

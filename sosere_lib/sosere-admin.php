@@ -110,7 +110,12 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 			if ( false == $this->options ) {
 				// preset options
 				$sosere_default_options = array( 
-					'use_cache' => 'on', 'max_cache_time' => '24', 'recommendation_box_title' => __( 'Recommended for you', 'sosere-rec' ), 'result_count' => '3', 'max_post_age' => '0', 'max_view_history' => '30' 
+					'use_cache' 				=> 'on', 
+					'max_cache_time'			=> '24', 
+					'recommendation_box_title'  => __( 'Recommended for you', 'sosere-rec' ), 
+					'result_count' 				=> '3', 
+					'max_post_age' 				=> '0', 
+					'max_view_history' 			=> '30' 
 				);
 				$this->options = $sosere_default_options;
 				update_option( 'plugin_sosere', $this->options );
@@ -124,7 +129,8 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 			
 			register_setting( 
 				'sosere_option_group', 							// Option group
-				'plugin_sosere' 								// Option name
+				'plugin_sosere', 								// Option name
+				array( $this, 'sanitize_options_callback' )		// sanitize_callback 
 			); 
 			
 			add_settings_section( 
@@ -243,7 +249,117 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				'sosere-setting-selection'
 			);
 		}
+		/**
+		 * Sanitize each setting field as needed
+		 *
+		 * @param array $input Contains all settings fields as array keys
+		 */
+		public function sanitize_options_callback( $input ) {
+			$sanitized_options = array();
+			if (is_array( $input ) && 0 < count( $input ) ) {
+				$sanitized_options = $input;
+			}
+			if( isset( $sanitized_options['recommendation_box_title_default'] ) ) {
+					if( 0 < strlen( $sanitized_options['recommendation_box_title_default'] ) ) {
+						$sanitized_options['recommendation_box_title_default'] = sanitize_text_field( $sanitized_options['recommendation_box_title_default'] );
+					} else {
+						unset( $sanitized_options['recommendation_box_title_default'] );
+					}
+				}
+			if( isset( $sanitized_options['recommendation_box_title'] ) ) {
+					if( 0 < count( $sanitized_options['recommendation_box_title'] ) ) {
+						foreach( $sanitized_options['recommendation_box_title'] as $lang => $val ) {
+							if( 0 < strlen( $val ) ) {
+								$sanitized_options['recommendation_box_title'][ $lang ] = sanitize_text_field( $val );
+							} else {
+								unset( $sanitized_options['recommendation_box_title'][ $lang ] );
+							}
+						}
+					} else {
+						unset( $sanitized_options['recommendation_box_title'] );
+					}
+				}
+			if( isset( $sanitized_options['result_count'] ) ) {
+				if( 0 < (int)$sanitized_options['result_count'] ) {
+					$sanitized_options['result_count'] = (int)$sanitized_options['result_count'];
+				} else {
+					$sanitized_options['result_count'] = 3;
+				}
+			}
+			if( isset( $sanitized_options['show_thumbs'] ) ) {
+					if( 0 < (int)$sanitized_options['show_thumbs'] ) {
+						$sanitized_options['show_thumbs'] = (int)$sanitized_options['show_thumbs'];
+					} else {
+						$sanitized_options['show_thumbs'] = 1;
+					}
+				}
+			if( isset( $sanitized_options['sosere_custom_thumbnail_size'] ) ) {
+					if( 4 < strlen( $sanitized_options['sosere_custom_thumbnail_size'] ) ) {
+						$sanitized_options['sosere_custom_thumbnail_size'] = sanitize_text_field( $sanitized_options['sosere_custom_thumbnail_size'] );
+					} else {
+						$sanitized_options['sosere_custom_thumbnail_size'] = '150x150';
+					}
+				}
+			if( isset( $sanitized_options['default_thumbnail_img_url'] ) ) {
+					if( 7 < strlen( $sanitized_options['default_thumbnail_img_url'] ) ) {
+						$sanitized_options['default_thumbnail_img_url'] = trim( esc_url( $sanitized_options['default_thumbnail_img_url'] ) );
+					} else {
+						unset ( $sanitized_options['default_thumbnail_img_url'] );
+					}
+				}
+			if( isset( $sanitized_options['default_thumbnail_img_id'] ) ) {
+					if( 0 < (int)$sanitized_options['default_thumbnail_img_id'] ) {
+						$sanitized_options['default_thumbnail_img_id'] = (int)$sanitized_options['default_thumbnail_img_id'];
+					} else {
+						unset( $sanitized_options['default_thumbnail_img_id'] );
+					}
+				}
+			if( isset( $sanitized_options['max_view_history'] ) ) {
+					if( 0 < (int)$sanitized_options['max_view_history'] ) {
+						$sanitized_options['max_view_history'] = (int)$sanitized_options['max_view_history'];
+					} else {
+						$sanitized_options['max_view_history'] = 30;
+					}
+				}
+			if( isset( $sanitized_options['max_post_age'] ) ) {
+					if( 0 < (int)$sanitized_options['max_post_age'] ) {
+						$sanitized_options['max_post_age'] = (int)$sanitized_options['max_post_age'];
+					} else {
+						$sanitized_options['max_post_age'] = 0;
+					}
+				}
+			if( isset( $sanitized_options['exclude_posts'] ) ) {
+					if( 0 < strlen( $sanitized_options['exclude_posts'] ) ) {
+						$sanitized_options['exclude_posts'] = sanitize_text_field( $sanitized_options['exclude_posts'] );
+					} else {
+						unset( $sanitized_options['exclude_posts'] );
+					}
+				}
+			if( isset( $sanitized_options['hide_recommendations_posts'] ) ) {
+					if( 0 < strlen( $sanitized_options['hide_recommendations_posts'] ) ) {
+						$sanitized_options['hide_recommendations_posts'] = sanitize_text_field( $sanitized_options['hide_recommendations_posts'] );
+					} else {
+						unset( $sanitized_options['hide_recommendations_posts'] );
+					}
+				}
+			if( isset( $sanitized_options['use_cache'] ) ) {
+					if( 0 < strlen( $sanitized_options['use_cache'] ) ) {
+						$sanitized_options['use_cache'] = (int)$sanitized_options['use_cache'];
+					} else {
+						unset( $sanitized_options['use_cache'] );
+					}
+				}
+			if( isset( $sanitized_options['max_cache_time'] ) ) {
+					if( 0 < (int)$sanitized_options['max_cache_time'] ) {
+						$sanitized_options['max_cache_time'] = (int)$sanitized_options['max_cache_time'];
+					} else {
+						$sanitized_options['max_cache_time'] = 24;
+					}
+				}
 
+			return $sanitized_options;
+		}
+		
 		/**
 		 * Print the Section text
 		 */
@@ -272,7 +388,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 			if ( isset( $this->options['use_cache'] ) && 'on' == $this->options['use_cache'] ) $checkbox_use_cache = 'checked="checked"';
 			else $checkbox_use_cache = '';
 			printf( '<input type="checkbox" id="use_cache" name="plugin_sosere[use_cache]" %s />', $checkbox_use_cache );
-			print( '<span class="admininfo">' . __( "Caching increases your blog performance by storing output in database for a period of time, while SSOSERE doesn't have to generate it each time. It has no effect on other caching plugins but leave it unchecked if you are using another caching plugin.", 'sosere-rec' ) . '</span>' );
+			print( '<span class="admininfo">' . __( "Caching increases your blog performance by storing output in database for a period of time, while SOSERE doesn't have to generate it each time. It has no effect on other caching plugins but leave it unchecked if you are using another caching plugin.", 'sosere-rec' ) . '</span>' );
 		}
 
 		public function sosere_max_cache_time_callback() {
@@ -431,8 +547,11 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 					$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S72VJQJHV4J8G">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.', 'sosere-rec' );
 					$activation_msg .= '</p>';
 					$activation_msg .= '</div><!-- /.updated -->';
-					echo $activation_msg;
+					
 					delete_option( 'plugin_sosere_activated' );
+					
+					echo $activation_msg;
+					
 				}
 			}
 			return;
@@ -482,6 +601,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				$activation_msg .= '</p>';
 				$activation_msg .= '</div><!-- /.updated -->';
 				update_option( 'plugin_sosere_activated', array( 'plugin_sosere_activated' => true ) );
+				
 				echo $activation_msg;
 			}
 			if ( $result ) { 
