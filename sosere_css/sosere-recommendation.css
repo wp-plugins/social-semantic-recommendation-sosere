@@ -30,8 +30,7 @@ li.sosere-recommendation-thumbs {
 	display: inline;
 	list-style: none;
 	float: left;
-	width: 33%;
-	margin: 0 0 0 0 !important;
+	margin: 0 10px 0 0 !important;
 }
 
 .sosere-recommendation-thumbs  img {

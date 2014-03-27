@@ -288,9 +288,9 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 			}
 			if( isset( $sanitized_options['show_thumbs'] ) ) {
 					if( 0 < (int)$sanitized_options['show_thumbs'] ) {
-						$sanitized_options['show_thumbs'] = (int)$sanitized_options['show_thumbs'];
+						$sanitized_options['show_thumbs'] = floor( abs( (int)$sanitized_options['show_thumbs'] ) );
 					} else {
-						$sanitized_options['show_thumbs'] = 1;
+						$sanitized_options['show_thumbs'] = 0;
 					}
 				}
 			if( isset( $sanitized_options['sosere_custom_thumbnail_size'] ) ) {

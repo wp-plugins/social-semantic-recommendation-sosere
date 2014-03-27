@@ -342,7 +342,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 							}
 							
 							// build response string
-							$return_string .= '<li class="sosere-recommendation-thumbs">' . '<a href="' . get_permalink( $post_obj->ID ) . '">';
+							$return_string .= '<li class="sosere-recommendation-thumbs" style="width:' . $thumb_size[0] . 'px;">' . '<a href="' . get_permalink( $post_obj->ID ) . '">';
 							isset( $url ) ? $return_string .= '<img src="' . $url . '" alt="' . $post_obj->post_title . '" title="' . $post_obj->post_title . '" style="width:' . $thumb_size[0] . 'px; height: ' . $thumb_size[1] . 'px;"/>' : $return_string .= '<div class="no-thumb" style="width:' . $thumb_size[0] . 'px; height: ' . $thumb_size[1] . 'px;"></div>';
 							
 							// add title
