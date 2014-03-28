@@ -5,40 +5,39 @@
 div.sosere-recommendation {
 	border: none;
 	margin-bottom: 10px;
-	padding-top: 20px;
+	padding-top: 1px;
 	float: left;
 	width: 100%;
-	margin: 0 0 0 0;
+	margin-top: 20px;
+}
 
-	}
-	
 .sosere-recommendation  legend {
 	color: #333333;
 	float: left;
-	margin: -30px 0px -120px 20px;
+	margin: -30px 0 0 0;
 	padding: 0 20px;
 	background: #FFFFFF;
-	}
-	
+}
+
 .sosere-recommendation ul {
-		width: 100%;
-		clear: both;
-		margin: 0 0 0 0;
-	}
+	width: 100%;
+	clear: both;
+	padding-left: 5px;
+	margin: 0 0 0 0;
+}
+
 li.sosere-recommendation-thumbs {
 	display: inline;
 	list-style: none;
-	float: left; 
-	width:	33%;
-	margin: 0 0 0 0 !important;
+	float: left;
+	margin: 0 10px 0 0 !important;
 }
+
 .sosere-recommendation-thumbs  img {
-	width: 150px;
-	height: 150px;
+	
 }
+
 .no-thumb {
-	width: 150px;
-	height: 150px;
 	background: #F5F4DE;
 	border: 1px solid #BBBBBB;
 }
