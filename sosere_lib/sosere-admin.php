@@ -267,14 +267,8 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 					}
 				}
 			if( isset( $sanitized_options['recommendation_box_title'] ) ) {
-					if( 0 < count( $sanitized_options['recommendation_box_title'] ) ) {
-						foreach( $sanitized_options['recommendation_box_title'] as $lang => $val ) {
-							if( 0 < strlen( $val ) ) {
-								$sanitized_options['recommendation_box_title'][ $lang ] = sanitize_text_field( $val );
-							} else {
-								unset( $sanitized_options['recommendation_box_title'][ $lang ] );
-							}
-						}
+					if( 0 < strlen( $sanitized_options['recommendation_box_title'] ) ) {
+						$sanitized_options['recommendation_box_title'] = sanitize_text_field( $sanitized_options['recommendation_box_title'] );
 					} else {
 						unset( $sanitized_options['recommendation_box_title'] );
 					}
