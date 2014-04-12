@@ -27,9 +27,11 @@ div.sosere-recommendation {
 }
 
 li.sosere-recommendation-thumbs {
-	display: inline;
+
+	display: -webkit-inline-flex;
+	display: -moz-inline-flex;
+	display: inline-flex;
 	list-style: none;
-	float: left;
 	margin: 0 10px 0 0 !important;
 }
 

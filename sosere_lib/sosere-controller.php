@@ -4,7 +4,8 @@
  * Class: Sosere_Controller
  * Description: Main plugin controller
  *
- * @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+ * @package sosere 
+ * @author Arthur Kaiser <social-semantic-recommendation@sosere.com>
  */
 /*
  * avoid to call it directly
@@ -96,7 +97,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				global $post;
 				$this->post = $post;
 				
-				// be sure a a session is aviable
+				// be sure a a session is available
 				add_action( 'init', array( $this, 'sosere_start_session' ), 1 );
 				add_action( 'wp_logout', array( $this, 'sosere_end_session' ) );
 				add_action( 'wp_login', array( $this, 'sosere_end_session' ) );
@@ -141,7 +142,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				// add current post to network
 				$this->add_post_to_db();
 				
-				// get cached selestion if used
+				// get cached selection if used
 				if ( true == $this->use_cache ) {
 					$cached = get_post_meta( $this->post->ID, 'soseredbviewedpostscache' );
 					$cachetime = get_post_meta( $this->post->ID, 'soseredbviewedpostscachedate' );
@@ -374,21 +375,32 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		 * @return array
 		 */
 		private function preferential_selection( $all_selection ) {
-			$result_array = array();
-			$all_selection_diff = array_diff( $all_selection, $this->viewed_post_IDs, array( $this->post->ID ) );
 			
-			$size = count( array_unique( $all_selection_diff ) ) - 1;
-			if ( $size < $this->max_results ) {
-				return array_slice( array_diff( array_unique( $all_selection ), array( $this->post->ID ) ), 0, $this->max_results );
+			// exclude current and seen posts from being recommended again
+			$all_selection_diff = array_diff($all_selection, $this->viewed_post_IDs, array( $this->post->ID ) );
+			
+			// calculate array size
+			$count = count( $all_selection_diff );
+			
+			// get count of unique queried posts
+			$count_unique = count( array_unique( $all_selection_diff ) );
+			
+			// calculate ratio between max_results and size (count)
+			$ratio = floor( $count_unique/$this->max_results );
+			
+			// take a slice for selection 
+			
+			if ( 0 === $ratio ) {
+				return array_slice( array_diff( array_unique( $all_selection ), array( $this->post->ID ) ) , 0, $this->max_results );
 			} else {
 				shuffle( $all_selection_diff );
 				$slice_selection = array();
 				$i = 0;
-				while ( ( count( array_unique( $slice_selection ) ) < $this->max_results ) && $i < $this->max_results * 2 ) {
-					if ( count( array_unique( $slice_selection ) ) < $this->max_results ) {
-						shuffle( $all_selection_diff );
-						$slice_selection = array_slice( $all_selection_diff, 0, $this->max_results * 3, true );
-					}
+				
+				while ( (count( array_unique( $slice_selection ) ) < $this->max_results ) && $i < $this->max_results*2 ) {
+
+					shuffle( $all_selection_diff );
+					$slice_selection = array_slice( $all_selection_diff, 0, $count/$ratio , true );
 					$i++;
 				}
 				return array_slice( array_unique( $slice_selection ), 0, $this->max_results );

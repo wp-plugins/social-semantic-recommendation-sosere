@@ -1,13 +1,13 @@
 === Social Semantic Recommendation (SOSERE) ===
 Contributors: sosere
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EZGF93JFCLWLW
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NUQWN3PZ7Y296
 Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
-Tags: related posts, related content, pages, posts, related, sosere, multisite, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
+Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
-Tested up to: 3.8.1
-Stable tag: 1.9
+Tested up to: 3.8.2
+Stable tag: 1.10
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -15,7 +15,7 @@ Display a list of related entries on your site based on an unique, self-learning
 
 == Description ==
 
-Social Semantic Recommendation (SOSERE) is the perfect plugin to engage your readers and show them other exciting content from your website. It displays links or thumbnails to 
+Social Semantic Recommendation (SOSERE) is a easy way to engage your readers and show them related content from your website. It displays a link list or thumbnails to 
 related pages, posts and custom post types at the bottom of an entry. Improve your search engine listing and show readers what else is worth their reading time. 
 SOSERE is intelligent, customizable, efficient and easy to use. It works out of the box. No need to add any PHP tags. Simply activate and enjoy.  
 
@@ -54,7 +54,7 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 
 Translations available for:
  
-* English: default
+* English
 * German
 * Spanish
 * Portuguese ( Thanks to [Ricardo Nuno](http://ricardonuno.photoshelter.com) )
@@ -67,6 +67,15 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 **Like SOSERE?**
 -----------------------------------------
 *  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
+
+
+= Testimonials =
+
+<blockquote>
+"This is a the perfect plugin to engage your readers and show them other exciting content from your website."
+</blockquote>
+
+&mdash; [Peter Nilsson](http://weblees.com/free-related-posts-plugins-for-wordpress/), WordPress blogger
 
 == Installation ==
 = Single site installation =
@@ -122,7 +131,23 @@ You can also use it to compare e.g. performance and page impressions (A/B testin
 
 Yes. 
 
+== Screenshots ==
+1. SOSERE output: Linklist or Thumbnails, style able with custom css 
+2. SOSERE Settings Page: Basic Settings.  
+3. SOSERE Settings Page: View Settings. Change the way SOSERE displays recommendations 
+4. SOSERE Settings Page: View Settings. 
+5. SOSERE Settings Page: Selection Settings. Customize considered posts
+
+ 
+
+
 == Changelog ==
+
+= 1.10 =
+* fix setting page description text overlapping
+* add SOSERE logo to setting page
+* add screenshots
+* selection algorithm optimizations
 
 = 1.9 =
 * add Portuguese translation
