@@ -1,17 +1,16 @@
 // Uploading files
-var file_frame;
+var sosere_wp_file_frame;
 jQuery('#default_thumb_button').live('click', function( event ){
- 
+	// prevent default
 	event.preventDefault();
-	 
-	// If the media frame already exists, reopen it.
-	if ( file_frame ) {
-		file_frame.open();
+	// reopen 
+	if ( sosere_wp_file_frame ) {
+		sosere_wp_file_frame.open();
 		return;
 	}
 	 
 	// Create the media frame.
-	file_frame = wp.media.frames.file_frame = wp.media({
+	sosere_wp_file_frame = wp.media.frames.sosere_wp_file_frame = wp.media({
 		title: jQuery( this ).data( 'uploader_title' ),
 		button: {
 		text: jQuery( this ).data( 'uploader_button_text' ),
@@ -19,11 +18,15 @@ jQuery('#default_thumb_button').live('click', function( event ){
 		multiple: false 
 	});
 	 
-	// When an image is selected, run a callback.
-	file_frame.on( 'select', function() {
+	// When a thumbnail is selected, run a callback.
+	sosere_wp_file_frame.on( 'select', function() {
 		// multiple is set to false so only get one image from the uploader
-		attachment = file_frame.state().get('selection').first().toJSON();
-		if ( attachment.sizes.thumbnail ) {
+		attachment = sosere_wp_file_frame.state().get('selection').first().toJSON();
+		//sosere-thumb
+		if ( attachment.sizes.sosere_thumb ) {
+			jQuery('#default_thumbnail_img').attr('src', attachment.sizes.sosere_thumb.url);
+			jQuery('#default_thumbnail_img_url').val(attachment.sizes.sosere_thumb.url);
+		} else if ( attachment.sizes.thumbnail ) {
 			jQuery('#default_thumbnail_img').attr('src', attachment.sizes.thumbnail.url);
 			jQuery('#default_thumbnail_img_url').val(attachment.sizes.thumbnail.url);
 		} else {
@@ -36,5 +39,5 @@ jQuery('#default_thumb_button').live('click', function( event ){
 	});
 	 
 	// Finally, open the modal
-	file_frame.open();
+	sosere_wp_file_frame.open();
 });

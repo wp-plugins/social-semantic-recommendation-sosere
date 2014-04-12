@@ -1,13 +1,25 @@
 /* admin page */
-.admininfo {
-	position:absolute; 
-	left:40%;
+.wrap > h2 {
+	background: url('../sosere_img/sosere-logo30x30.png') no-repeat  scroll 0 10px;
+	padding-left: 40px;
 }
+
+.admininput{
+	float: left;
+	min-width: 30%;
+}
+
+.admininfo {
+	float: left;
+	max-width: 70%;
+}
+
 #default_thumbnail_img {
 	float: left;
 	max-width: 150px;
 	max-height: 150px;
 }
+
 #default_thumb_button {
 	margin-left: 20px;
 }
