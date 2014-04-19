@@ -6,8 +6,8 @@ Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
-Tested up to: 3.8.2
-Stable tag: 1.10
+Tested up to: 3.9
+Stable tag: 1.11
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -58,6 +58,7 @@ Translations available for:
 * German
 * Spanish
 * Portuguese ( Thanks to [Ricardo Nuno](http://ricardonuno.photoshelter.com) )
+* Italian ( Thanks to Marco Oliosi )
 
 
 
@@ -69,13 +70,13 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 *  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 
-= Testimonials =
+**Testimonials**
 
 <blockquote>
 "This is a the perfect plugin to engage your readers and show them other exciting content from your website."
 </blockquote>
 
-&mdash; [Peter Nilsson](http://weblees.com/free-related-posts-plugins-for-wordpress/), WordPress blogger
+&mdash; [Peter Nilsson](http://weblees.com/free-related-posts-plugins-for-wordpress/), WordPress enthusiast
 
 == Installation ==
 = Single site installation =
@@ -142,34 +143,39 @@ Yes.
 
 
 == Changelog ==
+= 1.11 =
+* NEW: Italian translation
+* Update: updated translations
+* Update: tested up to WordPress 3.9
 
 = 1.10 =
-* fix setting page description text overlapping
-* add SOSERE logo to setting page
-* add screenshots
-* selection algorithm optimizations
+* NEW: SOSERE logo to setting page
+* NEW: add screenshots
+* Update: selection algorithm optimizations
+* Bugix: fix setting page description text overlapping
 
 = 1.9 =
-* add Portuguese translation
+* NEW: Portuguese translation
 
 = 1.8.1 =
-* remove fix number of recommendations per line
-* fit title width automatically to selected thumbnail size
-* fix view type sanitazion bug
+* Update: fit title width automatically to selected thumbnail size
+* Bugfix: remove fix number of recommendations per line
+* Bugfix: fix view type sanitazion
 
 = 1.8 =
-* add configuration sanitizing
-* add Spanish translation
+* NEW: configuration sanitizing
+* NEW: Spanish translation
 
 = 1.7.1 =
-* minor fix
+* Bugfix: minor fix
 
 = 1.7 =
-* new configuration feature: set custom thumbnail size
-* minor fixes & codig style
+* NEW: new configuration feature: set custom thumbnail size
+* Update: codig style
+* Bugfix: minor fixes  
 
 = 1.6.1 =
-* minor fix
+* Bugfix: minor fix
 
 = 1.6 =
 * minor fixes

@@ -95,7 +95,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 		public function create_admin_page() {
 			?>
 		 <div class="wrap">
-			<h2>SOSERE</h2>
+			<h2 class="sosere">SOSERE</h2>
 			<form method="post" action="options.php">
 				<?php
 			// This prints out all hidden setting fields
@@ -120,7 +120,8 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 					'use_cache' 				=> 'on', 
 					'max_cache_time'			=> '24', 
 					'recommendation_box_title'  => __( 'Recommended for you', 'sosere-rec' ), 
-					'result_count' 				=> '3', 
+					'result_count' 				=> '3',
+					'include_pages'				=> 'on',
 					'max_post_age' 				=> '0', 
 					'max_view_history' 			=> '30' 
 				);
