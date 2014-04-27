@@ -27,12 +27,16 @@ div.sosere-recommendation {
 }
 
 li.sosere-recommendation-thumbs {
-
+	background: none;
 	display: -webkit-inline-flex;
 	display: -moz-inline-flex;
 	display: inline-flex;
 	list-style: none;
 	margin: 0 10px 0 0 !important;
+	padding: 5px;
+}
+li.sosere-recommendation-thumbs:hover {
+	background-color: #DDD;
 }
 
 .sosere-recommendation-thumbs  img {

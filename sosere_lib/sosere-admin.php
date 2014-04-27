@@ -182,7 +182,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 			
 			add_settings_section( 
 				'sosere-setting-view', 							// ID
-				__( 'View Settings', 'sosere-rec' ), 			// Title
+				__( 'Display Settings', 'sosere-rec' ), 			// Title
 				array(	$this, 'print_section_view_info' ),		// Callback
 				'sosere-settings' 								// Page
 			); 
@@ -375,7 +375,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 		 * @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		 */
 		public function print_section_view_info() {
-			_e( 'Select view settings:', 'sosere-rec' );
+			_e( 'Select display settings:', 'sosere-rec' );
 		}
 
 		/**

@@ -115,8 +115,10 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				add_filter( 'the_content', array( $this, 'sosere_run' ) );
 			}
 			// set browser locate
-			$this->browser_locate = explode( ';', $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
-			$this->browser_locate = explode( ',', $this->browser_locate[0] );
+			if ( isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
+				$this->browser_locate = explode( ';', $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
+				$this->browser_locate = explode( ',', $this->browser_locate[0] );
+			}
 		} // end constructor
 		
 		/**
@@ -349,9 +351,9 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 							// add title
 							if ( true === $this->show_thumbs_title ) {
 								if ( 0 < $this->title_leng && mb_strlen( $post_obj->post_title ) > $this->title_leng ) {
-									$return_string .= '<p>' . substr( $post_obj->post_title, 0, $this->title_leng ) . '...</p>';
+									$return_string .= '<span>' . substr( $post_obj->post_title, 0, $this->title_leng ) . '...</span>';
 								} else {
-									$return_string .= '<p>' . $post_obj->post_title . '</p>';
+									$return_string .= '<span>' . $post_obj->post_title . '</span>';
 								}
 							}
 							// close link, list
@@ -377,6 +379,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		private function preferential_selection( $all_selection ) {
 			
 			// exclude current and seen posts from being recommended again
+			$all_selection_diff = array();
 			$all_selection_diff = array_diff($all_selection, $this->viewed_post_IDs, array( $this->post->ID ) );
 			
 			// calculate array size
@@ -390,20 +393,19 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			
 			// take a slice for selection 
 			
-			if ( 0 === $ratio ) {
-				return array_slice( array_diff( array_unique( $all_selection ), array( $this->post->ID ) ) , 0, $this->max_results );
-			} else {
+			if ( 0 < $ratio ) {
 				shuffle( $all_selection_diff );
 				$slice_selection = array();
 				$i = 0;
 				
 				while ( (count( array_unique( $slice_selection ) ) < $this->max_results ) && $i < $this->max_results*2 ) {
-
 					shuffle( $all_selection_diff );
-					$slice_selection = array_slice( $all_selection_diff, 0, $count/$ratio , true );
+					$slice_selection = array_slice( $all_selection_diff, 0, $count/$ratio, true );
 					$i++;
 				}
 				return array_slice( array_unique( $slice_selection ), 0, $this->max_results );
+			} else {
+				return array_slice( array_diff( array_unique( $all_selection ), array( $this->post->ID ) ) , 0, $this->max_results );
 			}
 		}
 		/*

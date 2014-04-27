@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
 Tested up to: 3.9
-Stable tag: 1.11
+Stable tag: 1.11.1
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -143,6 +143,12 @@ Yes.
 
 
 == Changelog ==
+
+= 1.11.1 =
+* Update: thumbnail template
+* Update: translations
+* Bugfix: front controller fixes
+
 = 1.11 =
 * NEW: Italian translation
 * Update: updated translations
@@ -152,7 +158,7 @@ Yes.
 * NEW: SOSERE logo to setting page
 * NEW: add screenshots
 * Update: selection algorithm optimizations
-* Bugix: fix setting page description text overlapping
+* Bugfix: fix setting page description text overlapping
 
 = 1.9 =
 * NEW: Portuguese translation
