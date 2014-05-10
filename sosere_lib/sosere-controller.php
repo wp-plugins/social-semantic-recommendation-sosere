@@ -151,7 +151,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					
 					// diff in hours
 					if ( isset( $cachetime[0] ) ) {
-						$cachetime = $cachetime[0];
+						$cachetime = (int) $cachetime[0];
 						$diff = ( $this->now - $cachetime ) / ( 60 * 60 );
 					} else {
 						$diff = null;
@@ -312,7 +312,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( true === $this->hide_output || 0 === count( $selected_posts ) ) return '';
 			
 			// return output as html string else
-			$return_string = '<div class="sosere-recommendation entry-utility"><legend>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</legend><ul class="sosere-recommendation">';
+			$return_string = '<div class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
 			
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 				
