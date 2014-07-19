@@ -49,7 +49,7 @@ if( ! function_exists( 'add_action' ) ) {
 
 if( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
 
-	class Social_Semantic_Reommendation_SOSERE
+	class Social_Semantic_Recommendation_SOSERE
 	{
 
 		/**
@@ -92,4 +92,4 @@ if( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
 	} // end class
 } // end if !class
 
-new Social_Semantic_Reommendation_SOSERE();
+$run = new Social_Semantic_Recommendation_SOSERE();

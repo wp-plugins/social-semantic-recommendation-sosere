@@ -457,7 +457,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		}
 
 		/**
-		 * *
+		 *
 		 * Tracking Session handling
 		 *
 		 * @since 1.0

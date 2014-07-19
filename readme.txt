@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
 Tested up to: 3.9.1
-Stable tag: 1.11.2
+Stable tag: 1.12
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -24,7 +24,7 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 
 **A unique social-semantic network analysis based algorithm** 
 -----------------------------------------
-*  Using a unique algorithm considering categories, custom taxonomies and tags 
+*  Using a unique algorithm considering user behaviour, tags, categories and custom taxonomies 
 *  Combining collaborative filtering ( user behaviour ) and contextual approach for recommendations  
 *  Respects users privacy 
 
@@ -61,13 +61,15 @@ Translations available for:
 * Italian ( Thanks to Marco Oliosi )
 
 
+Take a look at [the SOSERE Demo Site](demo.sosere.de) and become impressed.
+
 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
 
 **Like SOSERE?**
 -----------------------------------------
-*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
+*  Spread the word! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 
 **Testimonials**
@@ -143,6 +145,11 @@ Yes.
 
 
 == Changelog ==
+
+= 1.12 =
+* NEW: all available image sizes for thumbnails selectable
+* NEW: uninstall clean up function
+* Bigfix: sanitazion fix  
 
 = 1.11.2 =
 * Update: changed recommendation box title to h3
