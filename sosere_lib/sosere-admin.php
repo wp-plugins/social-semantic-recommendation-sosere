@@ -344,9 +344,16 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 						unset( $sanitized_options['hide_recommendations_posts'] );
 					}
 				}
+			if ( isset( $sanitized_options['hide_output'] ) ) {
+				if( 0 < strlen( $sanitized_options['hide_output'] ) ) {
+						$sanitized_options['hide_output'] = $sanitized_options['hide_output'];
+					} else {
+						unset( $sanitized_options['hide_output'] );
+					}
+			}
 			if( isset( $sanitized_options['use_cache'] ) ) {
 					if( 0 < strlen( $sanitized_options['use_cache'] ) ) {
-						$sanitized_options['use_cache'] = (int)$sanitized_options['use_cache'];
+						$sanitized_options['use_cache'] = $sanitized_options['use_cache'];
 					} else {
 						unset( $sanitized_options['use_cache'] );
 					}
@@ -423,14 +430,27 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 		}
 
 		public function sosere_custom_thumbnail_size_callback() {
+			global $_wp_additional_image_sizes;
 			$optionsstring = '';
 			$sizes = array( 
-				'150x150' => __( 'default (150x150 px)', 'sosere-rec' ),
 				'200x200' => '200x200 px', 
+				'150x150' => __( 'default (150x150 px)', 'sosere-rec' ),
 				'100x100' => '100x100 px', 
 				'50x50' => '50x50 px', 
 			);
-			
+			// get all defined image sizes
+			foreach( get_intermediate_image_sizes() as $img_size_name) {
+					if ( is_bool( get_option( $img_size_name . '_size_w' ) ) === false ) {
+						$defined_sizes[ get_option( $img_size_name . '_size_w' ) . 'x' . get_option( $img_size_name . '_size_h' ) ] = get_option( $img_size_name . '_size_w' ) . 'x' . get_option( $img_size_name . '_size_h' ) . ' px'; 
+					} else {
+						if( isset( $_wp_additional_image_sizes ) && isset( $_wp_additional_image_sizes[ $img_size_name ] ) ) {
+							$defined_sizes[ $_wp_additional_image_sizes[ $img_size_name ]['width'] . 'x' . $_wp_additional_image_sizes[ $img_size_name ]['height'] ] = $_wp_additional_image_sizes[ $img_size_name ]['width'] . 'x' . $_wp_additional_image_sizes[ $img_size_name ]['height'] . ' px';
+						} // end if
+					} // end if-else
+				} // end foreach
+			$sizes = array_merge( $sizes, $defined_sizes );
+			// sort sizes array by keys
+			//ksort( $sizes );
 			foreach ( $sizes as $option_val => $option_text ) {
 				$optionsstring .= '<option ';
 				
@@ -439,6 +459,8 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				}
 				$optionsstring .= 'value="' . $option_val . '">' . $option_text . '</option>';
 			}
+			var_dump( $sizes );
+			
 			print( '<div class="admininput"><select name="plugin_sosere[sosere_custom_thumbnail_size]" >' . $optionsstring . '</select></div>' );
 			
 			print( '<span class="admininfo"> ' . __( 'Choose a custom thumbnail size.', 'sosere-rec' ) . '</span>' );
@@ -565,6 +587,40 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				}
 			}
 			return;
+		}
+		
+		/**
+		* clean up settings and data on uninstall
+		* @since 1.12
+		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		public function sosere_ee_on_uninstall() {
+			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+			
+			if ( current_user_can( 'activate_plugins' ) ) {
+				// activation flag 
+				 check_admin_referer( 'bulk-plugins' );
+				 
+				if ( __FILE__ != WP_UNINSTALL_PLUGIN ){
+					return;
+					} else {
+						try {
+						// delete options
+							delete_option( 'plugin_sosere_activated' );
+							delete_option( 'plugin_sosere' ); 
+							// delete post meta added by sosere
+							delete_post_meta_by_key( 'soseredbviewedpostscache' );
+							delete_post_meta_by_key( 'soseredbviewedpostscachedate' );
+							delete_post_meta_by_key( 'soseredbviewedposts' );
+						} catch( Exception $e ) {
+							// log message
+							$logmsg = 'Error during create custom table. (' . $e->getMessage() . ')';
+							$error = new WP_Error( $e->getCode(), $logmsg );
+						}
+					}
+			} 
+			return;
+			
 		}
 		
 		/*
