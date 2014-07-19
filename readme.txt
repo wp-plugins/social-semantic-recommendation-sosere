@@ -61,7 +61,7 @@ Translations available for:
 * Italian ( Thanks to Marco Oliosi )
 
 
-Take a look at [the SOSERE Demo Site](demo.sosere.de) and become impressed.
+Take a look at [the SOSERE Demo Site](http://demo.sosere.com) and become impressed.
 
 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
