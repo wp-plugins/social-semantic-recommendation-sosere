@@ -450,7 +450,7 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				} // end foreach
 			$sizes = array_merge( $sizes, $defined_sizes );
 			// sort sizes array by keys
-			//ksort( $sizes );
+			array_multisort( $sizes, SORT_NUMERIC );
 			foreach ( $sizes as $option_val => $option_text ) {
 				$optionsstring .= '<option ';
 				
@@ -459,7 +459,6 @@ if ( ! class_exists( 'Sosere_Admin' ) ) {
 				}
 				$optionsstring .= 'value="' . $option_val . '">' . $option_text . '</option>';
 			}
-			var_dump( $sizes );
 			
 			print( '<div class="admininput"><select name="plugin_sosere[sosere_custom_thumbnail_size]" >' . $optionsstring . '</select></div>' );
 			

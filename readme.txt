@@ -6,8 +6,8 @@ Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.2
-Tested up to: 3.9.1
-Stable tag: 1.12
+Tested up to: 3.9.2
+Stable tag: 1.13
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -61,7 +61,7 @@ Translations available for:
 * Italian ( Thanks to Marco Oliosi )
 
 
-Take a look at [the SOSERE Demo Site](http://demo.sosere.com) and become impressed.
+Take a look at the [SOSERE Demo Site](http://demo.sosere.com) and become impressed.
 
 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
@@ -145,6 +145,9 @@ Yes.
 
 
 == Changelog ==
+
+= 1.13 =
+* Update: all available image sizes for thumbnails ordered by size
 
 = 1.12 =
 * NEW: all available image sizes for thumbnails selectable
