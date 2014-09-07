@@ -227,8 +227,12 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
 				
+				// prepare and limit user selection
+				shuffle( $this->user_selection );
+				$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
+					
 				// merge selections
-				$all_selection = array_merge( $db_selection, $this->user_selection );
+				$all_selection = array_merge( $db_selection, $slice_user_selection );
 				
 				// get selected post id's
 				$selected_post_IDs = $this->preferential_selection( $all_selection );
