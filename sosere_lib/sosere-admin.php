@@ -336,14 +336,8 @@
 					}
 				}
 			if( isset( $sanitized_options['recommendation_box_title'] ) ) {
-					if( 0 < count( $sanitized_options['recommendation_box_title'] ) ) {
-						foreach( $sanitized_options['recommendation_box_title'] as $lang => $val ) {
-							if( 0 < strlen( $val ) ) {
-								$sanitized_options['recommendation_box_title'][ $lang ] = sanitize_text_field( $val );
-							} else {
-								unset( $sanitized_options['recommendation_box_title'][ $lang ] );
-							}
-						}
+					if( 0 < strlen( $sanitized_options['recommendation_box_title'] ) ) {
+						$sanitized_options['recommendation_box_title'] = sanitize_text_field( $sanitized_options['recommendation_box_title'] );
 					} else {
 						unset( $sanitized_options['recommendation_box_title'] );
 					}
@@ -799,7 +793,7 @@
 					if ( isset( $activated['plugin_sosere_activated']) && $activated['plugin_sosere_activated'] === true ){
 						$activation_msg = '<div class="updated">';
 						$activation_msg .= '<p>';
-						$activation_msg .= __( 'Thank you for using SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NUQWN3PZ7Y296">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.', 'sosere-rec' );
+						$activation_msg .= __( 'Thank you for activating SOSERE. It is free software. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NUQWN3PZ7Y296">Buy us some coffee</a> and support continuous improvement of <a href="http://www.sosere.com">SOSERE</a>.', 'sosere-rec' );
 						$activation_msg .= '</p>';
 						$activation_msg .= '</div><!-- /.updated -->';
 						echo $activation_msg;

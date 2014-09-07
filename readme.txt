@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -136,14 +136,17 @@ Yes.
 
 == Screenshots ==
 1. SOSERE output: Linklist or Thumbnails, style able with custom css 
-2. SOSERE Settings Page: Performance Settings.  
-3. SOSERE Settings Page: Display Settings. Change the way SOSERE displays recommendations 
-4. SOSERE Settings Page: Selection Settings. Customize considered posts
+2. SOSERE Settings Page: Display Settings. Change the way SOSERE displays recommendations 
+3. SOSERE Settings Page: Selection Settings. Customize considered pos
+4. SOSERE Settings Page: Performance Settings.   
 
  
 
 
 == Changelog ==
+= 2.0.1 =
+* Update: updated screenshots
+* Bugfix: sanitazion fix  
 
 = 2.0 =
 * NEW: user friendly settings tab-page
