@@ -12,11 +12,6 @@ div.sosere-recommendation {
 }
 
 .sosere-recommendation  legend {
-	color: #333333;
-	float: left;
-	margin: -30px 0 0 0;
-	padding: 0 20px;
-	background: #FFFFFF;
 }
 
 .sosere-recommendation ul {
@@ -24,6 +19,7 @@ div.sosere-recommendation {
 	clear: both;
 	padding-left: 5px;
 	margin: 0 0 0 0;
+	display: table;
 }
 
 li.sosere-recommendation-thumbs {
@@ -32,15 +28,16 @@ li.sosere-recommendation-thumbs {
 	display: -moz-inline-flex;
 	display: inline-flex;
 	list-style: none;
-	margin: 0 10px 0 0 !important;
-	padding: 5px;
+	margin: 0 4px 0 0 !important;
+	padding: 5px 2px 5px 2px;
 }
 li.sosere-recommendation-thumbs:hover {
 	background-color: #DDD;
 }
 
 .sosere-recommendation-thumbs  img {
-	
+	display: table;
+	width: 100% !important;
 }
 
 .no-thumb {
