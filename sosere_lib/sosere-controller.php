@@ -151,7 +151,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					
 					// diff in hours
 					if ( isset( $cachetime[0] ) ) {
-						$cachetime = $cachetime[0];
+						$cachetime = (int) $cachetime[0];
 						$diff = ( $this->now - $cachetime ) / ( 60 * 60 );
 					} else {
 						$diff = null;
@@ -227,8 +227,12 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
 				
+				// prepare and limit user selection
+				shuffle( $this->user_selection );
+				$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
+					
 				// merge selections
-				$all_selection = array_merge( $db_selection, $this->user_selection );
+				$all_selection = array_merge( $db_selection, $slice_user_selection );
 				
 				// get selected post id's
 				$selected_post_IDs = $this->preferential_selection( $all_selection );
@@ -312,7 +316,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( true === $this->hide_output || 0 === count( $selected_posts ) ) return '';
 			
 			// return output as html string else
-			$return_string = '<div class="sosere-recommendation entry-utility"><legend>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</legend><ul class="sosere-recommendation">';
+			$return_string = '<div class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
 			
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 				
@@ -457,7 +461,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		}
 
 		/**
-		 * *
+		 *
 		 * Tracking Session handling
 		 *
 		 * @since 1.0

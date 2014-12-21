@@ -5,9 +5,9 @@ Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
-Requires at least: 3.2
-Tested up to: 3.9
-Stable tag: 1.11.1
+Requires at least: 3.5
+Tested up to: 4.1
+Stable tag: 2.0.3
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -24,8 +24,8 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 
 **A unique social-semantic network analysis based algorithm** 
 -----------------------------------------
-*  Using a unique algorithm considering categories, custom taxonomies and tags 
-*  Considering contextual user behaviour 
+*  Using a unique algorithm considering user behaviour, tags, categories and custom taxonomies 
+*  Combining collaborative filtering ( user behaviour ) and contextual approach for recommendations  
 *  Respects users privacy 
 
 
@@ -61,13 +61,15 @@ Translations available for:
 * Italian ( Thanks to Marco Oliosi )
 
 
+Take a look at the [SOSERE Demo Site](http://demo.sosere.com) and become impressed.
+
 
 See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere/faq/) for answers to common questions.
 
 
 **Like SOSERE?**
 -----------------------------------------
-*  Spread the world! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
+*  Spread the word! Leave a [review](http://wordpress.org/support/view/plugin-reviews/social-semantic-recommendation-sosere/) and follow us [on Twitter](https://twitter.com/sosere_rec)
 
 
 **Testimonials**
@@ -134,15 +136,46 @@ Yes.
 
 == Screenshots ==
 1. SOSERE output: Linklist or Thumbnails, style able with custom css 
-2. SOSERE Settings Page: Basic Settings.  
-3. SOSERE Settings Page: View Settings. Change the way SOSERE displays recommendations 
-4. SOSERE Settings Page: View Settings. 
-5. SOSERE Settings Page: Selection Settings. Customize considered posts
+2. SOSERE Settings Page: Display Settings. Change the way SOSERE displays recommendations 
+3. SOSERE Settings Page: Selection Settings. Customize considered pos
+4. SOSERE Settings Page: Performance Settings.   
 
  
 
 
 == Changelog ==
+
+= 2.0.3 =
+* Update: tested up to 4.1
+
+= 2.0.2 =
+* Update: updated translations
+
+= 2.0.1 =
+* Update: updated screenshots
+* Bugfix: sanitazion fix  
+
+= 2.0 =
+* NEW: user friendly settings tab-page
+* NEW: exclude often used tags for better recommendations 
+* Update: algorithm optimizations
+* Update: tested up to WordPress 4.0
+* Update: support WordPress from 3.5
+* Bugfix: css fix for default thumbnail replacement box
+
+= 1.13 =
+* Update: all available image sizes for thumbnails ordered by size
+
+= 1.12 =
+* NEW: all available image sizes for thumbnails selectable
+* NEW: uninstall clean up function
+* Bugfix: sanitazion fix  
+
+= 1.11.2 =
+* Update: changed recommendation box title to h3
+* Update: tested up to 3.9.1
+* Update: Spanish translation
+* Update: changed thumbnail view to fit narrow themes
 
 = 1.11.1 =
 * Update: thumbnail template
