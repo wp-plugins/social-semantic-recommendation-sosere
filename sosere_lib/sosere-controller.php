@@ -168,9 +168,14 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				$db_selection = array();
 				
 				// get selections
-				// add filter (post age)
-				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
+				// distinct filter
 				add_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
+				// wpml filter
+				// add_filter( 'posts_join', array( $this, 'icl_join' ) );
+				// xili language filter
+				add_filter( 'posts_join', array( $this, 'xili_join' ) );
+				// where filter
+				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				
 				// get tag id's
 				$taxonomy_id_array = wp_get_post_tags( $this->post->ID, array( 'fields' => 'ids' ) );
@@ -212,6 +217,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				} elseif ( is_array( $category_id_array ) && 0 < count( $category_id_array ) ) {
 					$args_array['category__in'] = $category_id_array;
 				}
+				
 				// fire query
 				$posts_arr = get_posts( $args_array );
 				
@@ -223,25 +229,36 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 						}
 					}
 				}
-				
-				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
+				// distinct filter
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
+				// wpml filter
+				// remove_filter( 'posts_join', array( $this, 'icl_join' ) );
+				// xili filter
+				remove_filter( 'posts_join', array( $this, 'xili_join' ) );
+				// where filter
+				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				
-				// prepare and limit user selection
-				shuffle( $this->user_selection );
-				$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
+				if ( 0 < count( $this->user_selection ) ) {
+					// prepare and limit user selection
+					shuffle( $this->user_selection );
+					$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
+						
+					// merge selections
+					$all_selection = array_merge( $db_selection, $slice_user_selection );
+				} else {
+					$all_selection = $db_selection;
+				}
+				if( 0 < count( $all_selection ) ) {
+					// get selected post id's
+					$selected_post_IDs = $this->preferential_selection( $all_selection );
 					
-				// merge selections
-				$all_selection = array_merge( $db_selection, $slice_user_selection );
-				
-				// get selected post id's
-				$selected_post_IDs = $this->preferential_selection( $all_selection );
-				
-				// get post content
-				$selected_posts_arr = get_posts( array( 'include' => implode( ',', $selected_post_IDs ), 'post_type' => array( $this->included_post_types ), 'posts_per_page' => $this->max_results, 'suppress_filters' => true ) );
-				
-				$recommendation_string = $this->get_html_output( $selected_posts_arr );
-				
+					if ( 0 < count( $selected_post_IDs ) ) {
+						// get post content
+						$selected_posts_arr = get_posts( array( 'include' => implode( ',', $selected_post_IDs ), 'post_type' => array( $this->included_post_types ), 'posts_per_page' => $this->max_results, 'suppress_filters' => true ) );
+						
+						$recommendation_string = $this->get_html_output( $selected_posts_arr );
+					}
+				}
 				// cache it in db if used
 				if ( true == $this->use_cache ) {
 					if ( isset( $selected_posts_arr ) ) {
@@ -498,6 +515,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( $this->max_post_age > 0 ) {
 				$where .= " AND post_date >= '" . date( 'Y-m-d', strtotime( '-' . $this->max_post_age . ' days' ) ) . "'";
 			}
+			
 			return $where;
 		}
 
@@ -508,6 +526,45 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		 */
 		function search_distinct() {
 			return ''; // filter has no effect
+		}
+		/**
+		* join icl_table to get localized posts when wplm plugin is used
+		*
+		* @since 2.2.0
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		/*function icl_join ( $join ) {
+			global $wpdb;
+			
+		  if( defined ( 'ICL_LANGUAGE_CODE' ) ) {
+			$join .= ' INNER JOIN '.$wpdb->prefix.'icl_translations iclt ON ( '. 
+						$wpdb->prefix.'posts.ID = iclt.element_id AND iclt.language_code = "' . ICL_LANGUAGE_CODE . '")'.
+					  ' INNER JOIN '.$wpdb->prefix.'icl_languages icll ON ( iclt.language_code=icll.code AND icll.active=1 )';			
+		  }
+		  
+		
+		  return $join;
+		}
+		*/
+		/**
+		* join taxonomy tables to get localized posts when xili language plugin is used
+		*
+		* @since 2.1.0
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		function xili_join ( $join ) {
+			global $wpdb;
+		  if( defined ( 'XILILANGUAGE_VER' ) ) {
+			$post_lang_id = xiliml_get_lang_object_of_post ($this->post->ID);
+			if ( is_object( $post_lang_id ) && isset( $post_lang_id->term_id ) ) {
+				$join .= ' INNER JOIN '.$wpdb->prefix.'term_relationships tr ON ( ' .
+							'tr.object_id = '.$wpdb->prefix.'posts.ID  )'.
+						 ' INNER JOIN '.$wpdb->prefix.'term_taxonomy tt ON ('.
+							'tt.term_id = tr.term_taxonomy_id AND tt.taxonomy=\'language\' AND tt.term_id = '.$post_lang_id->term_id.')';
+			}
+		  }
+		
+		  return $join;
 		}
 	} // end class sosereController
 	

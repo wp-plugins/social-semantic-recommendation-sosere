@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -51,8 +51,12 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 
 **Multilanguage support**
 -----------------------------------------
+* Support multilanguage plugins 
+* [qTranslate](https://wordpress.org/plugins/qtranslate/)
+* [xili-language](https://wordpress.org/plugins/xili-language/)
 
-Translations available for:
+
+Settingpage translations available for:
  
 * English
 * German
@@ -144,6 +148,9 @@ Yes.
 
 
 == Changelog ==
+
+= 2.1.0 =
+* NEW: xili-languages support
 
 = 2.0.3 =
 * Update: tested up to 4.1
