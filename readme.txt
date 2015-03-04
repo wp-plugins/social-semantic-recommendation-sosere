@@ -6,8 +6,8 @@ Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 2.1.0
+Tested up to: 4.1.1
+Stable tag: 2.1.1
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -148,6 +148,10 @@ Yes.
 
 
 == Changelog ==
+
+= 2.1.1 =
+* Update: tested up to WordPress 4.1.1
+* Bugfix: minor css fix for line break of long words in titles when thumbnail view is active 
 
 = 2.1.0 =
 * NEW: xili-languages support
