@@ -258,15 +258,19 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 						
 						$recommendation_string = $this->get_html_output( $selected_posts_arr );
 					}
-				}
+				} 
 				// cache it in db if used
 				if ( true == $this->use_cache ) {
-					if ( isset( $selected_posts_arr ) ) {
+					if ( isset( $selected_posts_arr ) && isset( $recommendation_string ) && 0 < strlen( $recommendation_string ) ) {
 						add_post_meta( $this->post->ID, 'soseredbviewedpostscache', $recommendation_string, true ) or update_post_meta( $this->post->ID, 'soseredbviewedpostscache', $recommendation_string );
 						add_post_meta( $this->post->ID, 'soseredbviewedpostscachedate', $this->now, true ) or update_post_meta( $this->post->ID, 'soseredbviewedpostscachedate', $this->now );
 					}
 				}
-				return $content . $recommendation_string;
+				if( isset( $recommendation_string ) && 0 < strlen( $recommendation_string ) ) {
+					return $content . $recommendation_string;
+				} else {
+					return $content; 
+				}
 			} else {
 				return $content;
 			}
@@ -333,7 +337,8 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( true === $this->hide_output || 0 === count( $selected_posts ) ) return '';
 			
 			// return output as html string else
-			$return_string = '<div class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
+			
+			$return_string = '<aside role="complementary" class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
 			
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 				
@@ -385,7 +390,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					}
 				}
 			}
-			$return_string .= '</ul></div>';
+			$return_string .= '</ul></aside>';
 			return $return_string;
 		}
 

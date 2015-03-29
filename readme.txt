@@ -4,10 +4,10 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Author: sosere
 Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
-Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching
+Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching, Accessibility Ready, accessibility-ready
 Requires at least: 3.5
 Tested up to: 4.1.1
-Stable tag: 2.1.1
+Stable tag: 2.2
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -148,6 +148,9 @@ Yes.
 
 
 == Changelog ==
+
+= 2.2 =
+* NEW: accessibility ready output
 
 = 2.1.1 =
 * Update: tested up to WordPress 4.1.1
