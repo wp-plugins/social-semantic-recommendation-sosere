@@ -287,7 +287,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
 			}
 			$network_data = @unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
-			if ( false !== $network_data ) {
+			if ( false !== $network_data && is_array ($network_data) ) {
 				foreach ( $network_data as $key => $network_data_set ) {
 					if ( $network_data_set['id'] != $this->post->ID ) {
 						if ( 0 < $network_data_set['timestamp'] ) {
