@@ -151,7 +151,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					
 					// diff in hours
 					if ( isset( $cachetime[0] ) ) {
-						$cachetime = $cachetime[0];
+						$cachetime = (int) $cachetime[0];
 						$diff = ( $this->now - $cachetime ) / ( 60 * 60 );
 					} else {
 						$diff = null;
@@ -168,9 +168,14 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				$db_selection = array();
 				
 				// get selections
-				// add filter (post age)
-				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
+				// distinct filter
 				add_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
+				// wpml filter
+				// add_filter( 'posts_join', array( $this, 'icl_join' ) );
+				// xili language filter
+				add_filter( 'posts_join', array( $this, 'xili_join' ) );
+				// where filter
+				add_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				
 				// get tag id's
 				$taxonomy_id_array = wp_get_post_tags( $this->post->ID, array( 'fields' => 'ids' ) );
@@ -212,6 +217,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				} elseif ( is_array( $category_id_array ) && 0 < count( $category_id_array ) ) {
 					$args_array['category__in'] = $category_id_array;
 				}
+				
 				// fire query
 				$posts_arr = get_posts( $args_array );
 				
@@ -223,29 +229,48 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 						}
 					}
 				}
-				
-				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
+				// distinct filter
 				remove_filter( 'posts_distinct', array( $this, 'search_distinct' ) );
+				// wpml filter
+				// remove_filter( 'posts_join', array( $this, 'icl_join' ) );
+				// xili filter
+				remove_filter( 'posts_join', array( $this, 'xili_join' ) );
+				// where filter
+				remove_filter( 'posts_where', array( $this, 'additional_filter' ) );
 				
-				// merge selections
-				$all_selection = array_merge( $db_selection, $this->user_selection );
-				
-				// get selected post id's
-				$selected_post_IDs = $this->preferential_selection( $all_selection );
-				
-				// get post content
-				$selected_posts_arr = get_posts( array( 'include' => implode( ',', $selected_post_IDs ), 'post_type' => array( $this->included_post_types ), 'posts_per_page' => $this->max_results, 'suppress_filters' => true ) );
-				
-				$recommendation_string = $this->get_html_output( $selected_posts_arr );
-				
+				if ( 0 < count( $this->user_selection ) ) {
+					// prepare and limit user selection
+					shuffle( $this->user_selection );
+					$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
+						
+					// merge selections
+					$all_selection = array_merge( $db_selection, $slice_user_selection );
+				} else {
+					$all_selection = $db_selection;
+				}
+				if( 0 < count( $all_selection ) ) {
+					// get selected post id's
+					$selected_post_IDs = $this->preferential_selection( $all_selection );
+					
+					if ( 0 < count( $selected_post_IDs ) ) {
+						// get post content
+						$selected_posts_arr = get_posts( array( 'include' => implode( ',', $selected_post_IDs ), 'post_type' => array( $this->included_post_types ), 'posts_per_page' => $this->max_results, 'suppress_filters' => true ) );
+						
+						$recommendation_string = $this->get_html_output( $selected_posts_arr );
+					}
+				} 
 				// cache it in db if used
 				if ( true == $this->use_cache ) {
-					if ( isset( $selected_posts_arr ) ) {
+					if ( isset( $selected_posts_arr ) && isset( $recommendation_string ) && 0 < strlen( $recommendation_string ) ) {
 						add_post_meta( $this->post->ID, 'soseredbviewedpostscache', $recommendation_string, true ) or update_post_meta( $this->post->ID, 'soseredbviewedpostscache', $recommendation_string );
 						add_post_meta( $this->post->ID, 'soseredbviewedpostscachedate', $this->now, true ) or update_post_meta( $this->post->ID, 'soseredbviewedpostscachedate', $this->now );
 					}
 				}
-				return $content . $recommendation_string;
+				if( isset( $recommendation_string ) && 0 < strlen( $recommendation_string ) ) {
+					return $content . $recommendation_string;
+				} else {
+					return $content; 
+				}
 			} else {
 				return $content;
 			}
@@ -262,7 +287,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
 			}
 			$network_data = @unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
-			if ( false !== $network_data ) {
+			if ( false !== $network_data && is_array ($network_data) ) {
 				foreach ( $network_data as $key => $network_data_set ) {
 					if ( $network_data_set['id'] != $this->post->ID ) {
 						if ( 0 < $network_data_set['timestamp'] ) {
@@ -312,7 +337,8 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( true === $this->hide_output || 0 === count( $selected_posts ) ) return '';
 			
 			// return output as html string else
-			$return_string = '<div class="sosere-recommendation entry-utility"><legend>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</legend><ul class="sosere-recommendation">';
+			
+			$return_string = '<aside role="complementary" class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
 			
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 				
@@ -345,7 +371,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 							}
 							
 							// build response string
-							$return_string .= '<li class="sosere-recommendation-thumbs" style="width:' . $thumb_size[0] . 'px;">' . '<a href="' . get_permalink( $post_obj->ID ) . '">';
+							$return_string .= '<li class="sosere-recommendation-thumbs" style="width:' . $thumb_size[0] . 'px;">' . '<a href="' . get_permalink( $post_obj->ID ) . '" style="width:' . $thumb_size[0] . 'px;">';
 							isset( $url ) ? $return_string .= '<img src="' . $url . '" alt="' . $post_obj->post_title . '" title="' . $post_obj->post_title . '" style="width:' . $thumb_size[0] . 'px; height: ' . $thumb_size[1] . 'px;"/>' : $return_string .= '<div class="no-thumb" style="width:' . $thumb_size[0] . 'px; height: ' . $thumb_size[1] . 'px;"></div>';
 							
 							// add title
@@ -364,7 +390,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					}
 				}
 			}
-			$return_string .= '</ul></div>';
+			$return_string .= '</ul></aside>';
 			return $return_string;
 		}
 
@@ -457,7 +483,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		}
 
 		/**
-		 * *
+		 *
 		 * Tracking Session handling
 		 *
 		 * @since 1.0
@@ -494,6 +520,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			if ( $this->max_post_age > 0 ) {
 				$where .= " AND post_date >= '" . date( 'Y-m-d', strtotime( '-' . $this->max_post_age . ' days' ) ) . "'";
 			}
+			
 			return $where;
 		}
 
@@ -504,6 +531,45 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		 */
 		function search_distinct() {
 			return ''; // filter has no effect
+		}
+		/**
+		* join icl_table to get localized posts when wplm plugin is used
+		*
+		* @since 2.2.0
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		/*function icl_join ( $join ) {
+			global $wpdb;
+			
+		  if( defined ( 'ICL_LANGUAGE_CODE' ) ) {
+			$join .= ' INNER JOIN '.$wpdb->prefix.'icl_translations iclt ON ( '. 
+						$wpdb->prefix.'posts.ID = iclt.element_id AND iclt.language_code = "' . ICL_LANGUAGE_CODE . '")'.
+					  ' INNER JOIN '.$wpdb->prefix.'icl_languages icll ON ( iclt.language_code=icll.code AND icll.active=1 )';			
+		  }
+		  
+		
+		  return $join;
+		}
+		*/
+		/**
+		* join taxonomy tables to get localized posts when xili language plugin is used
+		*
+		* @since 2.1.0
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		function xili_join ( $join ) {
+			global $wpdb;
+		  if( defined ( 'XILILANGUAGE_VER' ) ) {
+			$post_lang_id = xiliml_get_lang_object_of_post ($this->post->ID);
+			if ( is_object( $post_lang_id ) && isset( $post_lang_id->term_id ) ) {
+				$join .= ' INNER JOIN '.$wpdb->prefix.'term_relationships tr ON ( ' .
+							'tr.object_id = '.$wpdb->prefix.'posts.ID  )'.
+						 ' INNER JOIN '.$wpdb->prefix.'term_taxonomy tt ON ('.
+							'tt.term_id = tr.term_taxonomy_id AND tt.taxonomy=\'language\' AND tt.term_id = '.$post_lang_id->term_id.')';
+			}
+		  }
+		
+		  return $join;
 		}
 	} // end class sosereController
 	

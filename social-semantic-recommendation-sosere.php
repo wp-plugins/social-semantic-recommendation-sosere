@@ -3,7 +3,7 @@
  * Plugin Name: Social Semantic Recommendation (SOSERE)
  * Plugin URI: http://www.sosere.com
  * Description: SOSERE displays a list or thumbnails of related entries at the bottom of a post based on an unique, self-learning, socialsemantic analysis algorithm. It is efficient and fits perfect to each post individually.
- * Version: 1.11.1
+ * Version: 2.2.1
  * Author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
  * Author URI: http://www.arthurkaiser.de
  * License: GPLv2
@@ -49,7 +49,7 @@ if( ! function_exists( 'add_action' ) ) {
 
 if( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
 
-	class Social_Semantic_Reommendation_SOSERE
+	class Social_Semantic_Recommendation_SOSERE
 	{
 
 		/**
@@ -57,7 +57,7 @@ if( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
 		 */
 		public function __construct() {
 			// define constants
-			if( ! defined( 'SOSERE_REQUIRED_WP_VERSION' ) ) define( 'SOSERE_REQUIRED_WP_VERSION', '3.2' );
+			if( ! defined( 'SOSERE_REQUIRED_WP_VERSION' ) ) define( 'SOSERE_REQUIRED_WP_VERSION', '3.5' );
 			
 			if( ! defined( 'SOSERE_PLUGIN_ROOT_DIR' ) ) define( 'SOSERE_PLUGIN_ROOT_DIR', plugin_dir_path( __FILE__ ) );
 			
@@ -92,4 +92,4 @@ if( ! class_exists( 'Social_Semantic_Reommendation_SOSERE' ) ) {
 	} // end class
 } // end if !class
 
-new Social_Semantic_Reommendation_SOSERE();
+$run = new Social_Semantic_Recommendation_SOSERE();
