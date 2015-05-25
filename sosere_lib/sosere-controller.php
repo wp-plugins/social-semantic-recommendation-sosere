@@ -4,6 +4,8 @@
  * Class: Sosere_Controller
  * Description: Main plugin controller
  *
+ * Text Domain: sosere-rec
+ * Domain Path: /sosere_languages/
  * @package sosere 
  * @author Arthur Kaiser <social-semantic-recommendation@sosere.com>
  */
@@ -22,6 +24,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 	{
 		// class vars
 		public $max_view_history = 30; // in days
+		
 		public $max_post_age = 1000;
 
 		public $max_results = 3;
@@ -113,6 +116,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				
 				// run
 				add_filter( 'the_content', array( $this, 'sosere_run' ) );
+				
 			}
 			// set browser locate
 			if ( isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
@@ -139,6 +143,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				if ( ! is_object( $this->post ) ) {
 					global $post;
 					$this->post = $post;
+					$this->post_language = $this->get_current_language();
 				}
 				
 				// add current post to network
@@ -241,8 +246,12 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				if ( 0 < count( $this->user_selection ) ) {
 					// prepare and limit user selection
 					shuffle( $this->user_selection );
-					$slice_user_selection = array_slice( $this->user_selection, 0, 32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array ) , true );
-						
+					$slice_to =  32 + $this->max_results + ( count( $category_id_array ) + 1 ) + count( $taxonomy_id_array );
+					$slice_user_selection = array_slice( $this->user_selection, 0, $slice_to, true );
+					
+					// slice db user data
+					$this->slice_db_user_data( $slice_to );
+					
 					// merge selections
 					$all_selection = array_merge( $db_selection, $slice_user_selection );
 				} else {
@@ -277,6 +286,27 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		}
 
 		/**
+		* Slice viewed posts data in db to dynamic value to prevent data garbage
+		*
+		* @since 2.3
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		private function slice_db_user_data( $slice_to=32 ){
+			$network_data = @unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
+			if ( false !== $network_data && is_array ($network_data) ) {
+				$new_network_data = array_slice($network_data, -1*$slice_to );
+				
+			}
+			// safe to db
+			if ( isset( $new_network_data ) && is_array( $new_network_data ) ) {
+				$new_network_data_DB = serialize( $new_network_data );
+			}
+			
+			if ( isset( $new_network_data_DB ) ) {
+				add_post_meta( $this->post->ID, 'soseredbviewedposts', $new_network_data_DB, true ) or update_post_meta( $this->post->ID, 'soseredbviewedposts', $new_network_data_DB );
+			}
+		}
+		/**
 		 * Add actual seen post to posts network
 		 *
 		 * @since 1.0
@@ -288,12 +318,13 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			}
 			$network_data = @unserialize( get_post_meta( $this->post->ID, 'soseredbviewedposts', true ) );
 			if ( false !== $network_data && is_array ($network_data) ) {
+				
 				foreach ( $network_data as $key => $network_data_set ) {
-					if ( $network_data_set['id'] != $this->post->ID ) {
+					if ( isset( $network_data_set['id'] ) && isset( $network_data_set['language'] ) && $network_data_set['id'] != $this->post->ID && $network_data_set['language'] == $this->post_language) {
 						if ( 0 < $network_data_set['timestamp'] ) {
 							$diff = ( $this->now - $network_data_set['timestamp'] ) / ( 60 * 60 * 24 );
 							if ( $diff <= $this->max_view_history || ( 0 === $this->max_view_history ) ) {
-								$new_network_data[] = array( 'id' => $network_data_set['id'], 'timestamp' => $network_data_set['timestamp'] );
+								$new_network_data[] = array( 'id' => $network_data_set['id'], 'timestamp' => $network_data_set['timestamp'], 'language' => $network_data_set['language']);
 								// add to selection
 								$this->user_selection[] = (int) $network_data_set['id'];
 							}
@@ -306,11 +337,12 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				// add new post to network but prevent self relations and reload entries
 				if ( isset( $this->viewed_post_IDs ) && is_array( $this->viewed_post_IDs ) ) {
 					$sp_id = null;
-					if ( $this->post->ID != end( $this->viewed_post_IDs ) ) {
+					$last_vp_entry = end( $this->viewed_post_IDs );
+					if ( $this->post->ID != $last_vp_entry[0] && $this->post_language == $last_vp_entry[1] ) {
 						// add to network
 						foreach ( $this->viewed_post_IDs as $sp_id ) {
-							if ( (int) $this->post->ID !== (int) $sp_id ) {
-								$new_network_data[] = array( 'id' => $sp_id, 'timestamp' => $this->now );
+							if ( (int) $this->post->ID !== (int) $sp_id[0] && $this->post_language == $sp_id[1] ) {
+								$new_network_data[] = array( 'id' => $sp_id[0], 'timestamp' => $this->now, 'language' => $sp_id[1] );
 							}
 						}
 					}
@@ -391,12 +423,13 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				}
 			}
 			$return_string .= '</ul></aside>';
+			
 			return $return_string;
 		}
 
 		/**
 		 * selection
-		 *
+		 * 
 		 * @since 1.0
 		 * @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		 * @param s $allSelection array
@@ -406,7 +439,12 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			
 			// exclude current and seen posts from being recommended again
 			$all_selection_diff = array();
-			$all_selection_diff = array_diff($all_selection, $this->viewed_post_IDs, array( $this->post->ID ) );
+			$viewed_post_IDs = array();
+			// extract post id's from $this->viewed_post_IDs
+			foreach($this->viewed_post_IDs as $k=>$v) {
+				$viewed_post_IDs[] = $v[0];	
+			}
+			$all_selection_diff = array_diff($all_selection, $viewed_post_IDs, array( $this->post->ID ) );
 			
 			// calculate array size
 			$count = count( $all_selection_diff );
@@ -437,6 +475,28 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 		/*
 		 * ######################## Helper section ##########################
 		 */
+		
+		/**
+		* Set language of the current post/page
+		*
+		* @since 2.3
+		* @author : Arthur Kaiser <social-semantic-recommendation@sosere.com>
+		*/
+		public function get_current_language() {
+			if ( defined ( 'ICL_LANGUAGE_CODE' ) ) {
+				return ICL_LANGUAGE_CODE;
+			} elseif ( defined ( 'XILILANGUAGE_VER' ) ) {
+				$xili_lang_obj = xiliml_get_lang_object_of_post ($this->post->ID);
+				if(is_object( $xili_lang_obj ) && isset( $xili_lang_obj->slug ) ) {
+					return substr($xili_lang_obj->slug, 0, 2);
+				} 			
+			} elseif ( function_exists ( 'pll_current_language' ) ) {
+					return pll_current_language();
+			}
+			// return default
+			return 'xx';
+			
+		}
 		
 		/**
 		 * Enqueue plugin style-files
@@ -499,12 +559,14 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 				// get viewed postIDs from
 				if ( isset( $_SESSION ) && 0 < count( $_SESSION ) && is_array( $_SESSION['sosereviewedposts'] ) ) {
 					$this->viewed_post_IDs = $_SESSION['sosereviewedposts'];
+					$latest_viewed_post = end( $this->viewed_post_IDs );
 					// do not add if reload
-					if ( end( $this->viewed_post_IDs ) != (int) $this->post->ID ) {
-						$_SESSION['sosereviewedposts'][] = (int) $this->post->ID;
+					if ( (int) $latest_viewed_post[0] != (int) $this->post->ID  ) {
+						$_SESSION['sosereviewedposts'][] = array( (int) $this->post->ID, $this->post_language );
 					}
 				} else {
-					$_SESSION['sosereviewedposts'] = array( (int) $this->post->ID );
+					$_SESSION['sosereviewedposts'] = array( );
+					$_SESSION['sosereviewedposts'][] = array( (int) $this->post->ID, $this->post_language );
 				}
 			}
 		}

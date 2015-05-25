@@ -7,7 +7,7 @@ Plugin URI: http://www.sosere.com
 Tags: related, content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching, Accessibility Ready, accessibility-ready
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 2.2.3
+Stable tag: 2.3.0
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -54,6 +54,8 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 * Support multilanguage plugins 
 * [qTranslate](https://wordpress.org/plugins/qtranslate/)
 * [xili-language](https://wordpress.org/plugins/xili-language/)
+* wpml
+* [polylang](https://wordpress.org/plugins/polylang/)
 
 
 Settingpage translations available for:
@@ -92,9 +94,9 @@ See [the FAQ](http://wordpress.org/plugins/social-semantic-recommendation-sosere
 4.   (Optional) Go to the "SOSERE" settings page to customize SOSERE.
 
 
-= Multi site installation =
+= Network site installation =
 1.    Download the plugin and unzip
-2.    Put the content of social-semantic-recommendation-sosere folder in your wp-content/mu-plugins folder and activate the plugin through the WordPress admin.
+2.    Put the content of social-semantic-recommendation-sosere folder in your wp-content/plugins folder and activate network wide the plugin through the WordPress admin.
 3.    Done! The plugin will automatically display related posts underneath your posts content. 
 4.   (Optional) Go to the "SOSERE" settings page to customize SOSERE.
 
@@ -148,6 +150,14 @@ Yes.
 
 
 == Changelog ==
+
+= 2.3.0 =
+* NEW: wpml support
+* NEW: polylang support
+* NEW: garbage collection for deprecated visitors data
+* NEW: multilanguage support for recommendation box title
+* Update: language sensitive recommendations
+
 
 = 2.2.3 =
 * Update: tested up to WordPress 4.2.2
