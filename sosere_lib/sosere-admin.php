@@ -5,7 +5,7 @@
  * Description: plugin admin page
  * © Arthur Kaiser, all rights reserved
  * @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
- * @package: sosere-
+ * @package: sosere
  */
  /*
  * avoid to call it directly
@@ -67,21 +67,22 @@
 		* @author: Arthur Kaiser <social-semantic-recommendation@sosere.com>
 		*/
 		function admin_include_register() 
-		{	
-			// style
-			wp_register_style( 'sosere-recommendation-admin-style',  SOSERE_PLUGIN_DIR.'sosere_css/sosere-recommendation-admin.css' );
-			wp_enqueue_style( 'sosere-recommendation-admin-style' );
-			
-			// Include in admin cusom header for media lib
-			// register admin js
-			wp_register_script( 'sosere-recommendation-admin-js',  SOSERE_PLUGIN_DIR.'sosere_js/sosere-recommendation-admin.js' );
-			wp_enqueue_script( 'sosere-recommendation-admin-js' );
-			
-			// required wp 3.5
-			if( version_compare( WP_VERSION, '3.5', '>=' ) ) {
-				// media lib
-				wp_enqueue_media();
-				wp_enqueue_script( 'custom-header' );	
+		{	if( isset( $_GET['page'] ) && 0 === stripos( $_GET['page'], 'sosere-' ) ) {
+				// style
+				wp_register_style( 'sosere-recommendation-admin-style',  SOSERE_PLUGIN_DIR.'sosere_css/sosere-recommendation-admin.css' );
+				wp_enqueue_style( 'sosere-recommendation-admin-style' );
+				
+				// Include in admin cusom header for media lib
+				// register admin js
+				wp_register_script( 'sosere-recommendation-admin-js',  SOSERE_PLUGIN_DIR.'sosere_js/sosere-recommendation-admin.js' );
+				wp_enqueue_script( 'sosere-recommendation-admin-js' );
+				
+				// required wp 3.5
+				if( version_compare( WP_VERSION, '3.5', '>=' ) ) {
+					// media lib
+					wp_enqueue_media();
+					wp_enqueue_script( 'custom-header' );	
+				}
 			}
 		}
 
