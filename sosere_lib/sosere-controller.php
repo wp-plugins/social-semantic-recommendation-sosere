@@ -370,7 +370,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 			
 			// return output as html string else
 			
-			$return_string = '<aside role="complementary" class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
+			$return_string = '<aside role="complementary"><div class="sosere-recommendation entry-utility"><h3>' . __( $this->recommendation_box_title, 'sosere-rec' ) . '</h3><ul class="sosere-recommendation">';
 			
 			if ( isset( $selected_posts ) && is_array( $selected_posts ) ) {
 				
@@ -422,7 +422,7 @@ if ( ! class_exists( 'Sosere_Controller' ) ) {
 					}
 				}
 			}
-			$return_string .= '</ul></aside>';
+			$return_string .= '</ul></div></aside>';
 			
 			return $return_string;
 		}

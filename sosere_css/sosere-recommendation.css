@@ -3,6 +3,7 @@
 * base style
 */
 div.sosere-recommendation {
+	clear: both;
 	border: none;
 	margin-bottom: 10px;
 	padding-top: 1px;
