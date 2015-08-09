@@ -6,8 +6,8 @@ Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related posts, related content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching, Accessibility Ready, accessibility-ready
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 2.3.2
+Tested up to: 4.2.3
+Stable tag: 2.3.3
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -150,6 +150,9 @@ Yes.
 
 
 == Changelog ==
+
+= 2.3.3 =
+* Update: tested up to WordPress 4.2.3
 
 = 2.3.2 =
 * Bugfix: minor css fix for recommendation box title 
