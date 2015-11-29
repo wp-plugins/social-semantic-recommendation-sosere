@@ -6,8 +6,8 @@ Author URI: http://www.sosere.com
 Plugin URI: http://www.sosere.com
 Tags: related posts, related content, pages, posts, sosere, network site, multilingual, thumbnails, social, semantic, recommendations, efficient, caching, Accessibility Ready, accessibility-ready
 Requires at least: 3.5
-Tested up to: 4.3
-Stable tag: 2.3.5
+Tested up to: 4.4
+Stable tag: 2.3.6
 License: GPLv2 
 
 Display a list of related entries on your site based on an unique, self-learning, socialsemantic network analysis algorithm.
@@ -36,6 +36,7 @@ SOSERE is intelligent, customizable, efficient and easy to use. It works out of 
 *  Post a featured image, first post image or default plugin image as thumbnail
 *  Customizable css style
 *  Customizable recommendation box title
+*  Responsive
 
 
 **Support of related posts, pages and custom post types**
@@ -150,6 +151,9 @@ Yes.
 
 
 == Changelog ==
+
+= 2.3.6 =
+* Update: tested up to WordPress 4.4
 
 = 2.3.5 =
 * Update: tested up to WordPress 4.3.1
